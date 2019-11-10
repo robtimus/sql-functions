@@ -19,6 +19,7 @@ package com.github.robtimus.sql.function;
 
 import java.sql.SQLException;
 import java.util.Objects;
+import java.util.function.IntBinaryOperator;
 
 /**
  * Represents an operation upon two {@code int}-valued operands and producing an {@code int}-valued result.
@@ -46,7 +47,7 @@ public interface IntBinarySQLOperator {
      *         {@link UncheckedSQLException}.
      * @throws NullPointerException If {@code operator} is {@code null}.
      */
-    static IntBinarySQLOperator unchecked(IntBinarySQLOperator operator) {
+    static IntBinaryOperator unchecked(IntBinarySQLOperator operator) {
         Objects.requireNonNull(operator);
         return (left, right) -> {
             try {
@@ -66,7 +67,7 @@ public interface IntBinarySQLOperator {
      *         thrown.
      * @throws NullPointerException If {@code operator} is {@code null}.
      */
-    static IntBinarySQLOperator checked(IntBinarySQLOperator operator) {
+    static IntBinarySQLOperator checked(IntBinaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, right) -> {
             try {
