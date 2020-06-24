@@ -29,16 +29,16 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings({ "javadoc", "nls" })
-public class UncheckedSQLExceptionTest {
+@SuppressWarnings("nls")
+class UncheckedSQLExceptionTest {
 
     @Nested
     @DisplayName("serialization")
-    public class Serialization {
+    class Serialization {
 
         @Test
         @DisplayName("with message")
-        public void testWithMessage() {
+        void testWithMessage() {
             SQLException cause = new SQLException("SQL exception");
             UncheckedSQLException exception = new UncheckedSQLException("Unchecked SQL exception", cause);
 
@@ -50,7 +50,7 @@ public class UncheckedSQLExceptionTest {
 
         @Test
         @DisplayName("without message")
-        public void testWithoutMessage() {
+        void testWithoutMessage() {
             SQLException cause = new SQLException("SQL exception");
             UncheckedSQLException exception = new UncheckedSQLException(cause);
 

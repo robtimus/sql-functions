@@ -29,8 +29,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings({ "javadoc", "nls" })
-public class ToDoubleSQLBiFunctionTest {
+@SuppressWarnings("nls")
+class ToDoubleSQLBiFunctionTest {
 
     private static final String TEST_VALUE1 = "foo";
     private static final Integer TEST_VALUE2 = 13;
@@ -38,17 +38,17 @@ public class ToDoubleSQLBiFunctionTest {
 
     @Nested
     @DisplayName("unchecked(ToDoubleSQLBiFunction<? super T, ? super U, ? extends R>)")
-    public class Unchecked {
+    class Unchecked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> unchecked(null));
         }
 
         @Test
         @DisplayName("applies")
-        public void testApplies() {
+        void testApplies() {
             ToDoubleSQLBiFunction<String, Integer> sqlFunction = (t, u) -> TEST_RESULT;
             ToDoubleBiFunction<String, Integer> function = unchecked(sqlFunction);
 
@@ -57,7 +57,7 @@ public class ToDoubleSQLBiFunctionTest {
 
         @Test
         @DisplayName("throws")
-        public void testThrows() {
+        void testThrows() {
             ToDoubleSQLBiFunction<String, Integer> sqlFunction = (t, u) -> {
                 throw new SQLException("sqlFunction");
             };
@@ -72,17 +72,17 @@ public class ToDoubleSQLBiFunctionTest {
 
     @Nested
     @DisplayName("checked(BiFunction<? super T, ? super U, ? extends R>)")
-    public class Checked {
+    class Checked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> checked(null));
         }
 
         @Test
         @DisplayName("applies")
-        public void testApplies() throws SQLException {
+        void testApplies() throws SQLException {
             ToDoubleBiFunction<String, Integer> function = (t, u) -> TEST_RESULT;
             ToDoubleSQLBiFunction<String, Integer> sqlFunction = checked(function);
 
@@ -91,7 +91,7 @@ public class ToDoubleSQLBiFunctionTest {
 
         @Test
         @DisplayName("throws UncheckedSQLException")
-        public void testThrowsUncheckedSQLException() {
+        void testThrowsUncheckedSQLException() {
             SQLException e = new SQLException("original");
             ToDoubleBiFunction<String, Integer> function = (t, u) -> {
                 throw new UncheckedSQLException(e);
@@ -104,7 +104,7 @@ public class ToDoubleSQLBiFunctionTest {
 
         @Test
         @DisplayName("throws other exception")
-        public void testThrowsOtherException() {
+        void testThrowsOtherException() {
             IllegalStateException e = new IllegalStateException("error");
             ToDoubleBiFunction<String, Integer> function = (t, u) -> {
                 throw e;

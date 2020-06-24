@@ -31,24 +31,24 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings({ "javadoc", "nls" })
-public class SQLRunnableTest {
+@SuppressWarnings("nls")
+class SQLRunnableTest {
 
     private static final String TEST_VALUE = "foo";
 
     @Nested
     @DisplayName("unchecked(SQLRunnable)")
-    public class Unchecked {
+    class Unchecked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> unchecked(null));
         }
 
         @Test
         @DisplayName("accepts")
-        public void testAccepts() {
+        void testAccepts() {
             List<String> list = new ArrayList<>();
             SQLRunnable sqlAction = () -> list.add(TEST_VALUE);
             Runnable action = unchecked(sqlAction);
@@ -59,7 +59,7 @@ public class SQLRunnableTest {
 
         @Test
         @DisplayName("throws")
-        public void testThrows() {
+        void testThrows() {
             SQLRunnable sqlAction = () -> {
                 throw new SQLException("sqlAction");
             };
@@ -74,17 +74,17 @@ public class SQLRunnableTest {
 
     @Nested
     @DisplayName("checked(Runnable)")
-    public class Checked {
+    class Checked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> checked(null));
         }
 
         @Test
         @DisplayName("runs")
-        public void testAccepts() throws SQLException {
+        void testAccepts() throws SQLException {
             List<String> list = new ArrayList<>();
 
             Runnable action = () -> list.add(TEST_VALUE);
@@ -96,7 +96,7 @@ public class SQLRunnableTest {
 
         @Test
         @DisplayName("throws UncheckedSQLException")
-        public void testThrowsUncheckedSQLException() {
+        void testThrowsUncheckedSQLException() {
             SQLException e = new SQLException("original");
             Runnable action = () -> {
                 throw new UncheckedSQLException(e);
@@ -109,7 +109,7 @@ public class SQLRunnableTest {
 
         @Test
         @DisplayName("throws other exception")
-        public void testThrowsOtherException() {
+        void testThrowsOtherException() {
             IllegalStateException e = new IllegalStateException("error");
             Runnable action = () -> {
                 throw e;

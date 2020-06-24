@@ -32,19 +32,19 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings({ "javadoc", "nls" })
-public class SQLBiConsumerTest {
+@SuppressWarnings("nls")
+class SQLBiConsumerTest {
 
     private static final String TEST_VALUE1 = "foo";
     private static final Integer TEST_VALUE2 = 13;
 
     @Nested
     @DisplayName("andThen(SQLBiConsumer<? super T, ? super U>)")
-    public class AndThen {
+    class AndThen {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             SQLBiConsumer<String, Integer> consumer = (t, u) -> { /* does nothing */ };
 
             assertThrows(NullPointerException.class, () -> consumer.andThen(null));
@@ -52,7 +52,7 @@ public class SQLBiConsumerTest {
 
         @Test
         @DisplayName("accepts and accepts")
-        public void testAcceptsAndAccepts() throws SQLException {
+        void testAcceptsAndAccepts() throws SQLException {
             Map<String, Integer> consumerMap = new HashMap<>();
             Map<String, Integer> afterMap = new HashMap<>();
 
@@ -67,7 +67,7 @@ public class SQLBiConsumerTest {
 
         @Test
         @DisplayName("accepts and throws")
-        public void testAcceptsAndThrows() {
+        void testAcceptsAndThrows() {
             Map<String, Integer> consumerMap = new HashMap<>();
 
             SQLBiConsumer<String, Integer> consumer = consumerMap::put;
@@ -83,7 +83,7 @@ public class SQLBiConsumerTest {
 
         @Test
         @DisplayName("throws and accepts")
-        public void testThrowsAndAccepts() {
+        void testThrowsAndAccepts() {
             Map<String, Integer> afterMap = new HashMap<>();
 
             SQLBiConsumer<String, Integer> consumer = (t, u) -> {
@@ -99,7 +99,7 @@ public class SQLBiConsumerTest {
 
         @Test
         @DisplayName("throws and throws")
-        public void testThrowsAndThrows() {
+        void testThrowsAndThrows() {
             SQLBiConsumer<String, Integer> consumer = (t, u) -> {
                 throw new SQLException("consumer");
             };
@@ -115,17 +115,17 @@ public class SQLBiConsumerTest {
 
     @Nested
     @DisplayName("unchecked(SQLBiConsumer<? super T, ? super U>)")
-    public class Unchecked {
+    class Unchecked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> unchecked(null));
         }
 
         @Test
         @DisplayName("accepts")
-        public void testAccepts() {
+        void testAccepts() {
             Map<String, Integer> map = new HashMap<>();
 
             SQLBiConsumer<String, Integer> sqlConsumer = map::put;
@@ -137,7 +137,7 @@ public class SQLBiConsumerTest {
 
         @Test
         @DisplayName("throws")
-        public void testThrows() {
+        void testThrows() {
             SQLBiConsumer<String, Integer> sqlConsumer = (t, u) -> {
                 throw new SQLException("sqlConsumer");
             };
@@ -152,17 +152,17 @@ public class SQLBiConsumerTest {
 
     @Nested
     @DisplayName("checked(BiConsumer<? super T, ? super U>)")
-    public class Checked {
+    class Checked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> checked(null));
         }
 
         @Test
         @DisplayName("accepts")
-        public void testAccepts() throws SQLException {
+        void testAccepts() throws SQLException {
             Map<String, Integer> map = new HashMap<>();
 
             BiConsumer<String, Integer> consumer = map::put;
@@ -174,7 +174,7 @@ public class SQLBiConsumerTest {
 
         @Test
         @DisplayName("throws UncheckedSQLException")
-        public void testThrowsUncheckedSQLException() {
+        void testThrowsUncheckedSQLException() {
             SQLException e = new SQLException("original");
             BiConsumer<String, Integer> consumer = (t, u) -> {
                 throw new UncheckedSQLException(e);
@@ -187,7 +187,7 @@ public class SQLBiConsumerTest {
 
         @Test
         @DisplayName("throws other exception")
-        public void testThrowsOtherException() {
+        void testThrowsOtherException() {
             IllegalStateException e = new IllegalStateException("error");
             BiConsumer<String, Integer> consumer = (t, u) -> {
                 throw e;

@@ -29,8 +29,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings({ "javadoc", "nls" })
-public class DoubleBinarySQLOperatorTest {
+@SuppressWarnings("nls")
+class DoubleBinarySQLOperatorTest {
 
     private static final double TEST_VALUE1 = Math.PI;
     private static final double TEST_VALUE2 = Math.E;
@@ -38,17 +38,17 @@ public class DoubleBinarySQLOperatorTest {
 
     @Nested
     @DisplayName("unchecked(DoubleBinarySQLOperator)")
-    public class Unchecked {
+    class Unchecked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> unchecked(null));
         }
 
         @Test
         @DisplayName("applies")
-        public void testApplies() {
+        void testApplies() {
             DoubleBinarySQLOperator sqlOperator = (t, u) -> TEST_RESULT;
             DoubleBinaryOperator operator = unchecked(sqlOperator);
 
@@ -57,7 +57,7 @@ public class DoubleBinarySQLOperatorTest {
 
         @Test
         @DisplayName("throws")
-        public void testThrows() {
+        void testThrows() {
             DoubleBinarySQLOperator sqlOperator = (t, u) -> {
                 throw new SQLException("sqlOperator");
             };
@@ -72,17 +72,17 @@ public class DoubleBinarySQLOperatorTest {
 
     @Nested
     @DisplayName("checked(DoubleBinaryOperator<T>)")
-    public class Checked {
+    class Checked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> checked(null));
         }
 
         @Test
         @DisplayName("applies")
-        public void testApplies() throws SQLException {
+        void testApplies() throws SQLException {
             DoubleBinaryOperator operator = (t, u) -> TEST_RESULT;
             DoubleBinarySQLOperator sqlOperator = checked(operator);
 
@@ -91,7 +91,7 @@ public class DoubleBinarySQLOperatorTest {
 
         @Test
         @DisplayName("throws UncheckedSQLException")
-        public void testThrowsUncheckedSQLException() {
+        void testThrowsUncheckedSQLException() {
             SQLException e = new SQLException("original");
             DoubleBinaryOperator operator = (t, u) -> {
                 throw new UncheckedSQLException(e);
@@ -104,7 +104,7 @@ public class DoubleBinarySQLOperatorTest {
 
         @Test
         @DisplayName("throws other exception")
-        public void testThrowsOtherException() {
+        void testThrowsOtherException() {
             IllegalStateException e = new IllegalStateException("error");
             DoubleBinaryOperator operator = (t, u) -> {
                 throw e;

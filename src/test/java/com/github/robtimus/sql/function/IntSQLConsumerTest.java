@@ -32,18 +32,18 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings({ "javadoc", "nls" })
-public class IntSQLConsumerTest {
+@SuppressWarnings("nls")
+class IntSQLConsumerTest {
 
     private static final int TEST_VALUE = 13;
 
     @Nested
     @DisplayName("andThen(IntSQLConsumer)")
-    public class AndThen {
+    class AndThen {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             IntSQLConsumer consumer = t -> { /* does nothing */ };
 
             assertThrows(NullPointerException.class, () -> consumer.andThen(null));
@@ -51,7 +51,7 @@ public class IntSQLConsumerTest {
 
         @Test
         @DisplayName("accepts and accepts")
-        public void testAcceptsAndAccepts() throws SQLException {
+        void testAcceptsAndAccepts() throws SQLException {
             List<Integer> consumerList = new ArrayList<>();
             List<Integer> afterList = new ArrayList<>();
 
@@ -66,7 +66,7 @@ public class IntSQLConsumerTest {
 
         @Test
         @DisplayName("accepts and throws")
-        public void testAcceptsAndThrows() {
+        void testAcceptsAndThrows() {
             List<Integer> consumerList = new ArrayList<>();
 
             IntSQLConsumer consumer = consumerList::add;
@@ -82,7 +82,7 @@ public class IntSQLConsumerTest {
 
         @Test
         @DisplayName("throws and accepts")
-        public void testThrowsAndAccepts() {
+        void testThrowsAndAccepts() {
             List<Integer> afterList = new ArrayList<>();
 
             IntSQLConsumer consumer = t -> {
@@ -98,7 +98,7 @@ public class IntSQLConsumerTest {
 
         @Test
         @DisplayName("throws and throws")
-        public void testThrowsAndThrows() {
+        void testThrowsAndThrows() {
             IntSQLConsumer consumer = t -> {
                 throw new SQLException("consumer");
             };
@@ -114,17 +114,17 @@ public class IntSQLConsumerTest {
 
     @Nested
     @DisplayName("unchecked(IntSQLConsumer)")
-    public class Unchecked {
+    class Unchecked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> unchecked(null));
         }
 
         @Test
         @DisplayName("accepts")
-        public void testAccepts() {
+        void testAccepts() {
             List<Integer> list = new ArrayList<>();
 
             IntSQLConsumer sqlConsumer = list::add;
@@ -136,7 +136,7 @@ public class IntSQLConsumerTest {
 
         @Test
         @DisplayName("throws")
-        public void testThrows() {
+        void testThrows() {
             IntSQLConsumer sqlConsumer = t -> {
                 throw new SQLException("sqlConsumer");
             };
@@ -151,17 +151,17 @@ public class IntSQLConsumerTest {
 
     @Nested
     @DisplayName("checked(IntConsumer)")
-    public class Checked {
+    class Checked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> checked(null));
         }
 
         @Test
         @DisplayName("accepts")
-        public void testAccepts() throws SQLException {
+        void testAccepts() throws SQLException {
             List<Integer> list = new ArrayList<>();
 
             IntConsumer consumer = list::add;
@@ -173,7 +173,7 @@ public class IntSQLConsumerTest {
 
         @Test
         @DisplayName("throws UncheckedSQLException")
-        public void testThrowsUncheckedSQLException() {
+        void testThrowsUncheckedSQLException() {
             SQLException e = new SQLException("original");
             IntConsumer consumer = t -> {
                 throw new UncheckedSQLException(e);
@@ -186,7 +186,7 @@ public class IntSQLConsumerTest {
 
         @Test
         @DisplayName("throws other exception")
-        public void testThrowsOtherException() {
+        void testThrowsOtherException() {
             IllegalStateException e = new IllegalStateException("error");
             IntConsumer consumer = t -> {
                 throw e;

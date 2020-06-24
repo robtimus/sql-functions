@@ -30,19 +30,19 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings({ "javadoc", "nls" })
-public class IntUnarySQLOperatorTest {
+@SuppressWarnings("nls")
+class IntUnarySQLOperatorTest {
 
     private static final int TEST_VALUE = 13;
     private static final int TEST_RESULT = 481;
 
     @Nested
     @DisplayName("compose(IntUnarySQLOperator)")
-    public class Compose {
+    class Compose {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             IntUnarySQLOperator operator = t -> TEST_RESULT;
 
             assertThrows(NullPointerException.class, () -> operator.compose(null));
@@ -50,7 +50,7 @@ public class IntUnarySQLOperatorTest {
 
         @Test
         @DisplayName("applies and applies")
-        public void testAppliesAndApplies() throws SQLException {
+        void testAppliesAndApplies() throws SQLException {
             IntUnarySQLOperator operator = t -> TEST_RESULT;
             IntUnarySQLOperator before = t -> TEST_VALUE;
             IntUnarySQLOperator combined = operator.compose(before);
@@ -60,7 +60,7 @@ public class IntUnarySQLOperatorTest {
 
         @Test
         @DisplayName("applies and throws")
-        public void testAcceptsAndThrows() {
+        void testAcceptsAndThrows() {
             IntUnarySQLOperator operator = t -> TEST_RESULT;
             IntUnarySQLOperator before = t -> {
                 throw new SQLException("before");
@@ -73,7 +73,7 @@ public class IntUnarySQLOperatorTest {
 
         @Test
         @DisplayName("throws and applies")
-        public void testThrowsAndAccepts() {
+        void testThrowsAndAccepts() {
             IntUnarySQLOperator operator = t -> {
                 throw new SQLException("operator");
             };
@@ -86,7 +86,7 @@ public class IntUnarySQLOperatorTest {
 
         @Test
         @DisplayName("throws and throws")
-        public void testThrowsAndThrows() {
+        void testThrowsAndThrows() {
             IntUnarySQLOperator operator = t -> {
                 throw new SQLException("operator");
             };
@@ -102,11 +102,11 @@ public class IntUnarySQLOperatorTest {
 
     @Nested
     @DisplayName("andThen(IntUnarySQLOperator)")
-    public class AndThen {
+    class AndThen {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             IntUnarySQLOperator operator = t -> TEST_RESULT;
 
             assertThrows(NullPointerException.class, () -> operator.andThen(null));
@@ -114,7 +114,7 @@ public class IntUnarySQLOperatorTest {
 
         @Test
         @DisplayName("applies and applies")
-        public void testAppliesAndApplies() throws SQLException {
+        void testAppliesAndApplies() throws SQLException {
             IntUnarySQLOperator operator = t -> TEST_RESULT;
             IntUnarySQLOperator after = t -> TEST_VALUE;
             IntUnarySQLOperator combined = operator.andThen(after);
@@ -124,7 +124,7 @@ public class IntUnarySQLOperatorTest {
 
         @Test
         @DisplayName("applies and throws")
-        public void testAcceptsAndThrows() {
+        void testAcceptsAndThrows() {
             IntUnarySQLOperator operator = t -> TEST_RESULT;
             IntUnarySQLOperator after = t -> {
                 throw new SQLException("after");
@@ -137,7 +137,7 @@ public class IntUnarySQLOperatorTest {
 
         @Test
         @DisplayName("throws and applies")
-        public void testThrowsAndAccepts() {
+        void testThrowsAndAccepts() {
             IntUnarySQLOperator operator = t -> {
                 throw new SQLException("operator");
             };
@@ -150,7 +150,7 @@ public class IntUnarySQLOperatorTest {
 
         @Test
         @DisplayName("throws and throws")
-        public void testThrowsAndThrows() {
+        void testThrowsAndThrows() {
             IntUnarySQLOperator operator = t -> {
                 throw new SQLException("operator");
             };
@@ -166,7 +166,7 @@ public class IntUnarySQLOperatorTest {
 
     @Test
     @DisplayName("identity()")
-    public void testIdentity() throws SQLException {
+    void testIdentity() throws SQLException {
         IntUnarySQLOperator operator = identity();
 
         assertEquals(TEST_VALUE, operator.applyAsInt(TEST_VALUE));
@@ -174,17 +174,17 @@ public class IntUnarySQLOperatorTest {
 
     @Nested
     @DisplayName("unchecked(IntUnarySQLOperator)")
-    public class Unchecked {
+    class Unchecked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> unchecked(null));
         }
 
         @Test
         @DisplayName("applies")
-        public void testApplies() {
+        void testApplies() {
             IntUnarySQLOperator sqlOperator = t -> TEST_RESULT;
             IntUnaryOperator operator = unchecked(sqlOperator);
 
@@ -193,7 +193,7 @@ public class IntUnarySQLOperatorTest {
 
         @Test
         @DisplayName("throws")
-        public void testThrows() {
+        void testThrows() {
             IntUnarySQLOperator sqlOperator = t -> {
                 throw new SQLException("sqlOperator");
             };
@@ -208,17 +208,17 @@ public class IntUnarySQLOperatorTest {
 
     @Nested
     @DisplayName("checked(UnaryOperator<? super T, ? extends R>)")
-    public class Checked {
+    class Checked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> checked(null));
         }
 
         @Test
         @DisplayName("applies")
-        public void testApplies() throws SQLException {
+        void testApplies() throws SQLException {
             IntUnaryOperator operator = t -> TEST_RESULT;
             IntUnarySQLOperator sqlOperator = checked(operator);
 
@@ -227,7 +227,7 @@ public class IntUnarySQLOperatorTest {
 
         @Test
         @DisplayName("throws UncheckedSQLException")
-        public void testThrowsUncheckedSQLException() {
+        void testThrowsUncheckedSQLException() {
             SQLException e = new SQLException("original");
             IntUnaryOperator operator = t -> {
                 throw new UncheckedSQLException(e);
@@ -240,7 +240,7 @@ public class IntUnarySQLOperatorTest {
 
         @Test
         @DisplayName("throws other exception")
-        public void testThrowsOtherException() {
+        void testThrowsOtherException() {
             IllegalStateException e = new IllegalStateException("error");
             IntUnaryOperator operator = t -> {
                 throw e;

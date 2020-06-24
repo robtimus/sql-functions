@@ -29,25 +29,25 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings({ "javadoc", "nls" })
-public class DoubleToLongSQLFunctionTest {
+@SuppressWarnings("nls")
+class DoubleToLongSQLFunctionTest {
 
     private static final double TEST_VALUE = Math.PI;
     private static final long TEST_RESULT = System.currentTimeMillis();
 
     @Nested
     @DisplayName("unchecked(DoubleToLongSQLFunction)")
-    public class Unchecked {
+    class Unchecked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> unchecked(null));
         }
 
         @Test
         @DisplayName("applies")
-        public void testApplies() {
+        void testApplies() {
             DoubleToLongSQLFunction sqlFunction = t -> TEST_RESULT;
             DoubleToLongFunction function = unchecked(sqlFunction);
 
@@ -56,7 +56,7 @@ public class DoubleToLongSQLFunctionTest {
 
         @Test
         @DisplayName("throws")
-        public void testThrows() {
+        void testThrows() {
             DoubleToLongSQLFunction sqlFunction = t -> {
                 throw new SQLException("sqlFunction");
             };
@@ -71,17 +71,17 @@ public class DoubleToLongSQLFunctionTest {
 
     @Nested
     @DisplayName("checked(DoubleToLongFunction<? super R, ? extends R>)")
-    public class Checked {
+    class Checked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> checked(null));
         }
 
         @Test
         @DisplayName("applies")
-        public void testApplies() throws SQLException {
+        void testApplies() throws SQLException {
             DoubleToLongFunction function = t -> TEST_RESULT;
             DoubleToLongSQLFunction sqlFunction = checked(function);
 
@@ -90,7 +90,7 @@ public class DoubleToLongSQLFunctionTest {
 
         @Test
         @DisplayName("throws UncheckedSQLException")
-        public void testThrowsUncheckedSQLException() {
+        void testThrowsUncheckedSQLException() {
             SQLException e = new SQLException("original");
             DoubleToLongFunction function = t -> {
                 throw new UncheckedSQLException(e);
@@ -103,7 +103,7 @@ public class DoubleToLongSQLFunctionTest {
 
         @Test
         @DisplayName("throws other exception")
-        public void testThrowsOtherException() {
+        void testThrowsOtherException() {
             IllegalStateException e = new IllegalStateException("error");
             DoubleToLongFunction function = t -> {
                 throw e;

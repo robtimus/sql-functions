@@ -33,8 +33,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings({ "javadoc", "nls" })
-public class BinarySQLOperatorTest {
+@SuppressWarnings("nls")
+class BinarySQLOperatorTest {
 
     private static final String TEST_VALUE1 = "foo";
     private static final String TEST_VALUE2 = "bar";
@@ -42,17 +42,17 @@ public class BinarySQLOperatorTest {
 
     @Nested
     @DisplayName("minBy(Comparator<? super T>)")
-    public class MinBy {
+    class MinBy {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> minBy(null));
         }
 
         @Test
         @DisplayName("natural order")
-        public void testNaturalOrder() throws SQLException {
+        void testNaturalOrder() throws SQLException {
             BinarySQLOperator<String> operator = minBy(naturalOrder());
 
             assertEquals(TEST_VALUE2, operator.apply(TEST_VALUE1, TEST_VALUE2));
@@ -61,7 +61,7 @@ public class BinarySQLOperatorTest {
 
         @Test
         @DisplayName("reverse order")
-        public void testReverseOrder() throws SQLException {
+        void testReverseOrder() throws SQLException {
             BinarySQLOperator<String> operator = minBy(reverseOrder());
 
             assertEquals(TEST_VALUE1, operator.apply(TEST_VALUE1, TEST_VALUE2));
@@ -71,17 +71,17 @@ public class BinarySQLOperatorTest {
 
     @Nested
     @DisplayName("maxBy(Comparator<? super T>)")
-    public class MaxBy {
+    class MaxBy {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> maxBy(null));
         }
 
         @Test
         @DisplayName("natural order")
-        public void testNaturalOrder() throws SQLException {
+        void testNaturalOrder() throws SQLException {
             BinarySQLOperator<String> operator = maxBy(naturalOrder());
 
             assertEquals(TEST_VALUE1, operator.apply(TEST_VALUE1, TEST_VALUE2));
@@ -90,7 +90,7 @@ public class BinarySQLOperatorTest {
 
         @Test
         @DisplayName("reverse order")
-        public void testReverseOrder() throws SQLException {
+        void testReverseOrder() throws SQLException {
             BinarySQLOperator<String> operator = maxBy(reverseOrder());
 
             assertEquals(TEST_VALUE2, operator.apply(TEST_VALUE1, TEST_VALUE2));
@@ -100,17 +100,17 @@ public class BinarySQLOperatorTest {
 
     @Nested
     @DisplayName("unchecked(BinarySQLOperator<T>)")
-    public class Unchecked {
+    class Unchecked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> unchecked(null));
         }
 
         @Test
         @DisplayName("applies")
-        public void testApplies() {
+        void testApplies() {
             BinarySQLOperator<String> sqlOperator = (t, u) -> TEST_RESULT;
             BinaryOperator<String> operator = unchecked(sqlOperator);
 
@@ -119,7 +119,7 @@ public class BinarySQLOperatorTest {
 
         @Test
         @DisplayName("throws")
-        public void testThrows() {
+        void testThrows() {
             BinarySQLOperator<String> sqlOperator = (t, u) -> {
                 throw new SQLException("sqlOperator");
             };
@@ -134,17 +134,17 @@ public class BinarySQLOperatorTest {
 
     @Nested
     @DisplayName("checked(BinaryOperator<T>)")
-    public class Checked {
+    class Checked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> checked(null));
         }
 
         @Test
         @DisplayName("applies")
-        public void testApplies() throws SQLException {
+        void testApplies() throws SQLException {
             BinaryOperator<String> operator = (t, u) -> TEST_RESULT;
             BinarySQLOperator<String> sqlOperator = checked(operator);
 
@@ -153,7 +153,7 @@ public class BinarySQLOperatorTest {
 
         @Test
         @DisplayName("throws UncheckedSQLException")
-        public void testThrowsUncheckedSQLException() {
+        void testThrowsUncheckedSQLException() {
             SQLException e = new SQLException("original");
             BinaryOperator<String> operator = (t, u) -> {
                 throw new UncheckedSQLException(e);
@@ -166,7 +166,7 @@ public class BinarySQLOperatorTest {
 
         @Test
         @DisplayName("throws other exception")
-        public void testThrowsOtherException() {
+        void testThrowsOtherException() {
             IllegalStateException e = new IllegalStateException("error");
             BinaryOperator<String> operator = (t, u) -> {
                 throw e;

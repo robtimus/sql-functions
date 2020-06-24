@@ -29,25 +29,25 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings({ "javadoc", "nls" })
-public class LongToIntSQLFunctionTest {
+@SuppressWarnings("nls")
+class LongToIntSQLFunctionTest {
 
     private static final long TEST_VALUE = System.currentTimeMillis();
     private static final int TEST_RESULT = 13;
 
     @Nested
     @DisplayName("unchecked(LongToIntSQLFunction)")
-    public class Unchecked {
+    class Unchecked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> unchecked(null));
         }
 
         @Test
         @DisplayName("applies")
-        public void testApplies() {
+        void testApplies() {
             LongToIntSQLFunction sqlFunction = t -> TEST_RESULT;
             LongToIntFunction function = unchecked(sqlFunction);
 
@@ -56,7 +56,7 @@ public class LongToIntSQLFunctionTest {
 
         @Test
         @DisplayName("throws")
-        public void testThrows() {
+        void testThrows() {
             LongToIntSQLFunction sqlFunction = t -> {
                 throw new SQLException("sqlFunction");
             };
@@ -71,17 +71,17 @@ public class LongToIntSQLFunctionTest {
 
     @Nested
     @DisplayName("checked(LongToIntFunction<? super R, ? extends R>)")
-    public class Checked {
+    class Checked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> checked(null));
         }
 
         @Test
         @DisplayName("applies")
-        public void testApplies() throws SQLException {
+        void testApplies() throws SQLException {
             LongToIntFunction function = t -> TEST_RESULT;
             LongToIntSQLFunction sqlFunction = checked(function);
 
@@ -90,7 +90,7 @@ public class LongToIntSQLFunctionTest {
 
         @Test
         @DisplayName("throws UncheckedSQLException")
-        public void testThrowsUncheckedSQLException() {
+        void testThrowsUncheckedSQLException() {
             SQLException e = new SQLException("original");
             LongToIntFunction function = t -> {
                 throw new UncheckedSQLException(e);
@@ -103,7 +103,7 @@ public class LongToIntSQLFunctionTest {
 
         @Test
         @DisplayName("throws other exception")
-        public void testThrowsOtherException() {
+        void testThrowsOtherException() {
             IllegalStateException e = new IllegalStateException("error");
             LongToIntFunction function = t -> {
                 throw e;

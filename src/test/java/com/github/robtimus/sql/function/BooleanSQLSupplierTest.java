@@ -29,24 +29,24 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings({ "javadoc", "nls" })
-public class BooleanSQLSupplierTest {
+@SuppressWarnings("nls")
+class BooleanSQLSupplierTest {
 
     private static final boolean TEST_VALUE = true;
 
     @Nested
     @DisplayName("unchecked(BooleanSQLSupplier)")
-    public class Unchecked {
+    class Unchecked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> unchecked(null));
         }
 
         @Test
         @DisplayName("supplies")
-        public void testSupplies() {
+        void testSupplies() {
             BooleanSQLSupplier sqlSupplier = () -> TEST_VALUE;
             BooleanSupplier supplier = unchecked(sqlSupplier);
 
@@ -55,7 +55,7 @@ public class BooleanSQLSupplierTest {
 
         @Test
         @DisplayName("throws")
-        public void testThrows() {
+        void testThrows() {
             BooleanSQLSupplier sqlSupplier = () -> {
                 throw new SQLException("sqlSupplier");
             };
@@ -70,17 +70,17 @@ public class BooleanSQLSupplierTest {
 
     @Nested
     @DisplayName("checked(BooleanSupplier)")
-    public class Checked {
+    class Checked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> checked(null));
         }
 
         @Test
         @DisplayName("supplies")
-        public void testSupplies() throws SQLException {
+        void testSupplies() throws SQLException {
             BooleanSupplier supplier = () -> TEST_VALUE;
             BooleanSQLSupplier sqlSupplier = checked(supplier);
 
@@ -89,7 +89,7 @@ public class BooleanSQLSupplierTest {
 
         @Test
         @DisplayName("throws UncheckedSQLException")
-        public void testThrowsUncheckedSQLException() {
+        void testThrowsUncheckedSQLException() {
             SQLException e = new SQLException("original");
             BooleanSupplier supplier = () -> {
                 throw new UncheckedSQLException(e);
@@ -102,7 +102,7 @@ public class BooleanSQLSupplierTest {
 
         @Test
         @DisplayName("throws other exception")
-        public void testThrowsOtherException() {
+        void testThrowsOtherException() {
             IllegalStateException e = new IllegalStateException("error");
             BooleanSupplier supplier = () -> {
                 throw e;

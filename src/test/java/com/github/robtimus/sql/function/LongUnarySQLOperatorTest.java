@@ -30,19 +30,19 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings({ "javadoc", "nls" })
-public class LongUnarySQLOperatorTest {
+@SuppressWarnings("nls")
+class LongUnarySQLOperatorTest {
 
     private static final long TEST_VALUE = System.currentTimeMillis();
     private static final long TEST_RESULT = TEST_VALUE * 2;
 
     @Nested
     @DisplayName("compose(LongUnarySQLOperator)")
-    public class Compose {
+    class Compose {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             LongUnarySQLOperator operator = t -> TEST_RESULT;
 
             assertThrows(NullPointerException.class, () -> operator.compose(null));
@@ -50,7 +50,7 @@ public class LongUnarySQLOperatorTest {
 
         @Test
         @DisplayName("applies and applies")
-        public void testAppliesAndApplies() throws SQLException {
+        void testAppliesAndApplies() throws SQLException {
             LongUnarySQLOperator operator = t -> TEST_RESULT;
             LongUnarySQLOperator before = t -> TEST_VALUE;
             LongUnarySQLOperator combined = operator.compose(before);
@@ -60,7 +60,7 @@ public class LongUnarySQLOperatorTest {
 
         @Test
         @DisplayName("applies and throws")
-        public void testAcceptsAndThrows() {
+        void testAcceptsAndThrows() {
             LongUnarySQLOperator operator = t -> TEST_RESULT;
             LongUnarySQLOperator before = t -> {
                 throw new SQLException("before");
@@ -73,7 +73,7 @@ public class LongUnarySQLOperatorTest {
 
         @Test
         @DisplayName("throws and applies")
-        public void testThrowsAndAccepts() {
+        void testThrowsAndAccepts() {
             LongUnarySQLOperator operator = t -> {
                 throw new SQLException("operator");
             };
@@ -86,7 +86,7 @@ public class LongUnarySQLOperatorTest {
 
         @Test
         @DisplayName("throws and throws")
-        public void testThrowsAndThrows() {
+        void testThrowsAndThrows() {
             LongUnarySQLOperator operator = t -> {
                 throw new SQLException("operator");
             };
@@ -102,11 +102,11 @@ public class LongUnarySQLOperatorTest {
 
     @Nested
     @DisplayName("andThen(LongUnarySQLOperator)")
-    public class AndThen {
+    class AndThen {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             LongUnarySQLOperator operator = t -> TEST_RESULT;
 
             assertThrows(NullPointerException.class, () -> operator.andThen(null));
@@ -114,7 +114,7 @@ public class LongUnarySQLOperatorTest {
 
         @Test
         @DisplayName("applies and applies")
-        public void testAppliesAndApplies() throws SQLException {
+        void testAppliesAndApplies() throws SQLException {
             LongUnarySQLOperator operator = t -> TEST_RESULT;
             LongUnarySQLOperator after = t -> TEST_VALUE;
             LongUnarySQLOperator combined = operator.andThen(after);
@@ -124,7 +124,7 @@ public class LongUnarySQLOperatorTest {
 
         @Test
         @DisplayName("applies and throws")
-        public void testAcceptsAndThrows() {
+        void testAcceptsAndThrows() {
             LongUnarySQLOperator operator = t -> TEST_RESULT;
             LongUnarySQLOperator after = t -> {
                 throw new SQLException("after");
@@ -137,7 +137,7 @@ public class LongUnarySQLOperatorTest {
 
         @Test
         @DisplayName("throws and applies")
-        public void testThrowsAndAccepts() {
+        void testThrowsAndAccepts() {
             LongUnarySQLOperator operator = t -> {
                 throw new SQLException("operator");
             };
@@ -150,7 +150,7 @@ public class LongUnarySQLOperatorTest {
 
         @Test
         @DisplayName("throws and throws")
-        public void testThrowsAndThrows() {
+        void testThrowsAndThrows() {
             LongUnarySQLOperator operator = t -> {
                 throw new SQLException("operator");
             };
@@ -166,7 +166,7 @@ public class LongUnarySQLOperatorTest {
 
     @Test
     @DisplayName("identity()")
-    public void testIdentity() throws SQLException {
+    void testIdentity() throws SQLException {
         LongUnarySQLOperator operator = identity();
 
         assertEquals(TEST_VALUE, operator.applyAsLong(TEST_VALUE));
@@ -174,17 +174,17 @@ public class LongUnarySQLOperatorTest {
 
     @Nested
     @DisplayName("unchecked(LongUnarySQLOperator)")
-    public class Unchecked {
+    class Unchecked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> unchecked(null));
         }
 
         @Test
         @DisplayName("applies")
-        public void testApplies() {
+        void testApplies() {
             LongUnarySQLOperator sqlOperator = t -> TEST_RESULT;
             LongUnaryOperator operator = unchecked(sqlOperator);
 
@@ -193,7 +193,7 @@ public class LongUnarySQLOperatorTest {
 
         @Test
         @DisplayName("throws")
-        public void testThrows() {
+        void testThrows() {
             LongUnarySQLOperator sqlOperator = t -> {
                 throw new SQLException("sqlOperator");
             };
@@ -208,17 +208,17 @@ public class LongUnarySQLOperatorTest {
 
     @Nested
     @DisplayName("checked(UnaryOperator<? super T, ? extends R>)")
-    public class Checked {
+    class Checked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> checked(null));
         }
 
         @Test
         @DisplayName("applies")
-        public void testApplies() throws SQLException {
+        void testApplies() throws SQLException {
             LongUnaryOperator operator = t -> TEST_RESULT;
             LongUnarySQLOperator sqlOperator = checked(operator);
 
@@ -227,7 +227,7 @@ public class LongUnarySQLOperatorTest {
 
         @Test
         @DisplayName("throws UncheckedSQLException")
-        public void testThrowsUncheckedSQLException() {
+        void testThrowsUncheckedSQLException() {
             SQLException e = new SQLException("original");
             LongUnaryOperator operator = t -> {
                 throw new UncheckedSQLException(e);
@@ -240,7 +240,7 @@ public class LongUnarySQLOperatorTest {
 
         @Test
         @DisplayName("throws other exception")
-        public void testThrowsOtherException() {
+        void testThrowsOtherException() {
             IllegalStateException e = new IllegalStateException("error");
             LongUnaryOperator operator = t -> {
                 throw e;

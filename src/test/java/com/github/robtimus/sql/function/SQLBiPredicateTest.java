@@ -31,19 +31,19 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings({ "javadoc", "nls" })
-public class SQLBiPredicateTest {
+@SuppressWarnings("nls")
+class SQLBiPredicateTest {
 
     private static final String TEST_VALUE1 = "foo";
     private static final Integer TEST_VALUE2 = 13;
 
     @Nested
     @DisplayName("and(SQLBiPredicate<? super T, ? super U>)")
-    public class And {
+    class And {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             SQLBiPredicate<String, Integer> predicate = (t, u) -> true;
 
             assertThrows(NullPointerException.class, () -> predicate.and(null));
@@ -51,7 +51,7 @@ public class SQLBiPredicateTest {
 
         @Test
         @DisplayName("true and true")
-        public void testTrueAndTrue() throws SQLException {
+        void testTrueAndTrue() throws SQLException {
             SQLBiPredicate<String, Integer> predicate = (t, u) -> true;
             SQLBiPredicate<String, Integer> other = (t, u) -> true;
             SQLBiPredicate<String, Integer> combined = predicate.and(other);
@@ -61,7 +61,7 @@ public class SQLBiPredicateTest {
 
         @Test
         @DisplayName("true and false")
-        public void testTrueAndFalse() throws SQLException {
+        void testTrueAndFalse() throws SQLException {
             SQLBiPredicate<String, Integer> predicate = (t, u) -> true;
             SQLBiPredicate<String, Integer> other = (t, u) -> false;
             SQLBiPredicate<String, Integer> combined = predicate.and(other);
@@ -71,7 +71,7 @@ public class SQLBiPredicateTest {
 
         @Test
         @DisplayName("true and throws")
-        public void testTrueAndThrows() {
+        void testTrueAndThrows() {
             SQLBiPredicate<String, Integer> predicate = (t, u) -> true;
             SQLBiPredicate<String, Integer> other = (t, u) -> {
                 throw new SQLException("other");
@@ -84,7 +84,7 @@ public class SQLBiPredicateTest {
 
         @Test
         @DisplayName("false and true")
-        public void testFalseAndTrue() throws SQLException {
+        void testFalseAndTrue() throws SQLException {
             SQLBiPredicate<String, Integer> predicate = (t, u) -> false;
             SQLBiPredicate<String, Integer> other = (t, u) -> true;
             SQLBiPredicate<String, Integer> combined = predicate.and(other);
@@ -94,7 +94,7 @@ public class SQLBiPredicateTest {
 
         @Test
         @DisplayName("false and false")
-        public void testFalseAndFalse() throws SQLException {
+        void testFalseAndFalse() throws SQLException {
             SQLBiPredicate<String, Integer> predicate = (t, u) -> false;
             SQLBiPredicate<String, Integer> other = (t, u) -> false;
             SQLBiPredicate<String, Integer> combined = predicate.and(other);
@@ -104,7 +104,7 @@ public class SQLBiPredicateTest {
 
         @Test
         @DisplayName("false and throws")
-        public void testFalseAndThrows() throws SQLException {
+        void testFalseAndThrows() throws SQLException {
             SQLBiPredicate<String, Integer> predicate = (t, u) -> false;
             SQLBiPredicate<String, Integer> other = (t, u) -> {
                 throw new SQLException("other");
@@ -116,7 +116,7 @@ public class SQLBiPredicateTest {
 
         @Test
         @DisplayName("throws and true")
-        public void testThrowsAndTrue() {
+        void testThrowsAndTrue() {
             SQLBiPredicate<String, Integer> predicate = (t, u) -> {
                 throw new SQLException("predicate");
             };
@@ -129,7 +129,7 @@ public class SQLBiPredicateTest {
 
         @Test
         @DisplayName("throws and false")
-        public void testThrowsAndFalse() {
+        void testThrowsAndFalse() {
             SQLBiPredicate<String, Integer> predicate = (t, u) -> {
                 throw new SQLException("predicate");
             };
@@ -142,7 +142,7 @@ public class SQLBiPredicateTest {
 
         @Test
         @DisplayName("throws and throws")
-        public void testThrowsAndThrows() {
+        void testThrowsAndThrows() {
             SQLBiPredicate<String, Integer> predicate = (t, u) -> {
                 throw new SQLException("predicate");
             };
@@ -158,11 +158,11 @@ public class SQLBiPredicateTest {
 
     @Nested
     @DisplayName("negate()")
-    public class Negate {
+    class Negate {
 
         @Test
         @DisplayName("true")
-        public void testTrue() throws SQLException {
+        void testTrue() throws SQLException {
             SQLBiPredicate<String, Integer> predicate = (t, u) -> true;
             SQLBiPredicate<String, Integer> negated = predicate.negate();
 
@@ -171,7 +171,7 @@ public class SQLBiPredicateTest {
 
         @Test
         @DisplayName("false")
-        public void testFalse() throws SQLException {
+        void testFalse() throws SQLException {
             SQLBiPredicate<String, Integer> predicate = (t, u) -> false;
             SQLBiPredicate<String, Integer> negated = predicate.negate();
 
@@ -180,7 +180,7 @@ public class SQLBiPredicateTest {
 
         @Test
         @DisplayName("throws")
-        public void testThrows() {
+        void testThrows() {
             SQLBiPredicate<String, Integer> predicate = (t, u) -> {
                 throw new SQLException("predicate");
             };
@@ -193,11 +193,11 @@ public class SQLBiPredicateTest {
 
     @Nested
     @DisplayName("or(SQLBiPredicate<? super T, ? super U>)")
-    public class Or {
+    class Or {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             SQLBiPredicate<String, Integer> predicate = (t, u) -> true;
 
             assertThrows(NullPointerException.class, () -> predicate.or(null));
@@ -205,7 +205,7 @@ public class SQLBiPredicateTest {
 
         @Test
         @DisplayName("true or true")
-        public void testTrueOrTrue() throws SQLException {
+        void testTrueOrTrue() throws SQLException {
             SQLBiPredicate<String, Integer> predicate = (t, u) -> true;
             SQLBiPredicate<String, Integer> other = (t, u) -> true;
             SQLBiPredicate<String, Integer> combined = predicate.or(other);
@@ -215,7 +215,7 @@ public class SQLBiPredicateTest {
 
         @Test
         @DisplayName("true or false")
-        public void testTrueOrFalse() throws SQLException {
+        void testTrueOrFalse() throws SQLException {
             SQLBiPredicate<String, Integer> predicate = (t, u) -> true;
             SQLBiPredicate<String, Integer> other = (t, u) -> false;
             SQLBiPredicate<String, Integer> combined = predicate.or(other);
@@ -225,7 +225,7 @@ public class SQLBiPredicateTest {
 
         @Test
         @DisplayName("true or throws")
-        public void testTrueOrThrows() throws SQLException {
+        void testTrueOrThrows() throws SQLException {
             SQLBiPredicate<String, Integer> predicate = (t, u) -> true;
             SQLBiPredicate<String, Integer> other = (t, u) -> {
                 throw new SQLException("other");
@@ -237,7 +237,7 @@ public class SQLBiPredicateTest {
 
         @Test
         @DisplayName("false or true")
-        public void testFalseOrTrue() throws SQLException {
+        void testFalseOrTrue() throws SQLException {
             SQLBiPredicate<String, Integer> predicate = (t, u) -> false;
             SQLBiPredicate<String, Integer> other = (t, u) -> true;
             SQLBiPredicate<String, Integer> combined = predicate.or(other);
@@ -247,7 +247,7 @@ public class SQLBiPredicateTest {
 
         @Test
         @DisplayName("false or false")
-        public void testFalseOrFalse() throws SQLException {
+        void testFalseOrFalse() throws SQLException {
             SQLBiPredicate<String, Integer> predicate = (t, u) -> false;
             SQLBiPredicate<String, Integer> other = (t, u) -> false;
             SQLBiPredicate<String, Integer> combined = predicate.or(other);
@@ -257,7 +257,7 @@ public class SQLBiPredicateTest {
 
         @Test
         @DisplayName("false or throws")
-        public void testFalseOrThrows() {
+        void testFalseOrThrows() {
             SQLBiPredicate<String, Integer> predicate = (t, u) -> false;
             SQLBiPredicate<String, Integer> other = (t, u) -> {
                 throw new SQLException("other");
@@ -270,7 +270,7 @@ public class SQLBiPredicateTest {
 
         @Test
         @DisplayName("throws or true")
-        public void testThrowsOrTrue() {
+        void testThrowsOrTrue() {
             SQLBiPredicate<String, Integer> predicate = (t, u) -> {
                 throw new SQLException("predicate");
             };
@@ -283,7 +283,7 @@ public class SQLBiPredicateTest {
 
         @Test
         @DisplayName("throws or false")
-        public void testThrowsOrFalse() {
+        void testThrowsOrFalse() {
             SQLBiPredicate<String, Integer> predicate = (t, u) -> {
                 throw new SQLException("predicate");
             };
@@ -296,7 +296,7 @@ public class SQLBiPredicateTest {
 
         @Test
         @DisplayName("throws or throws")
-        public void testThrowsOrThrows() {
+        void testThrowsOrThrows() {
             SQLBiPredicate<String, Integer> predicate = (t, u) -> {
                 throw new SQLException("predicate");
             };
@@ -312,17 +312,17 @@ public class SQLBiPredicateTest {
 
     @Nested
     @DisplayName("unchecked(SQLBiPredicate<? super T, ? super U>)")
-    public class Unchecked {
+    class Unchecked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> unchecked(null));
         }
 
         @Test
         @DisplayName("true")
-        public void testTrue() {
+        void testTrue() {
             SQLBiPredicate<String, Integer> sqlPredicate = (t, u) -> true;
             BiPredicate<String, Integer> predicate = unchecked(sqlPredicate);
 
@@ -331,7 +331,7 @@ public class SQLBiPredicateTest {
 
         @Test
         @DisplayName("false")
-        public void testFalse() {
+        void testFalse() {
             SQLBiPredicate<String, Integer> sqlPredicate = (t, u) -> false;
             BiPredicate<String, Integer> predicate = unchecked(sqlPredicate);
 
@@ -340,7 +340,7 @@ public class SQLBiPredicateTest {
 
         @Test
         @DisplayName("throws")
-        public void testThrows() {
+        void testThrows() {
             SQLBiPredicate<String, Integer> sqlPredicate = (t, u) -> {
                 throw new SQLException("sqlPredicate");
             };
@@ -355,17 +355,17 @@ public class SQLBiPredicateTest {
 
     @Nested
     @DisplayName("checked(BiPredicate<? super T, ? super U>)")
-    public class Checked {
+    class Checked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> checked(null));
         }
 
         @Test
         @DisplayName("true")
-        public void testTrue() throws SQLException {
+        void testTrue() throws SQLException {
             BiPredicate<String, Integer> predicate = (t, u) -> true;
             SQLBiPredicate<String, Integer> sqlPredicate = checked(predicate);
 
@@ -374,7 +374,7 @@ public class SQLBiPredicateTest {
 
         @Test
         @DisplayName("false")
-        public void testFalse() throws SQLException {
+        void testFalse() throws SQLException {
             BiPredicate<String, Integer> predicate = (t, u) -> false;
             SQLBiPredicate<String, Integer> sqlPredicate = checked(predicate);
 
@@ -383,7 +383,7 @@ public class SQLBiPredicateTest {
 
         @Test
         @DisplayName("throws UncheckedSQLException")
-        public void testThrowsUncheckedSQLException() {
+        void testThrowsUncheckedSQLException() {
             SQLException e = new SQLException("original");
             BiPredicate<String, Integer> predicate = (t, u) -> {
                 throw new UncheckedSQLException(e);
@@ -396,7 +396,7 @@ public class SQLBiPredicateTest {
 
         @Test
         @DisplayName("throws other exception")
-        public void testThrowsOtherException() {
+        void testThrowsOtherException() {
             IllegalStateException e = new IllegalStateException("error");
             BiPredicate<String, Integer> predicate = (t, u) -> {
                 throw e;

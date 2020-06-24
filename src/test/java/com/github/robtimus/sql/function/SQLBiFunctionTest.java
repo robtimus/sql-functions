@@ -29,8 +29,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings({ "javadoc", "nls" })
-public class SQLBiFunctionTest {
+@SuppressWarnings("nls")
+class SQLBiFunctionTest {
 
     private static final String TEST_VALUE1 = "foo";
     private static final Integer TEST_VALUE2 = 13;
@@ -38,11 +38,11 @@ public class SQLBiFunctionTest {
 
     @Nested
     @DisplayName("andThen(SQLFunction<? super R, ? extends V>)")
-    public class AndThen {
+    class AndThen {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             SQLBiFunction<String, Integer, Integer> function = (t, u) -> TEST_RESULT;
 
             assertThrows(NullPointerException.class, () -> function.andThen(null));
@@ -50,7 +50,7 @@ public class SQLBiFunctionTest {
 
         @Test
         @DisplayName("applies and applies")
-        public void testAppliesAndApplies() throws SQLException {
+        void testAppliesAndApplies() throws SQLException {
             SQLBiFunction<String, Integer, Integer> function = (t, u) -> TEST_RESULT;
             SQLFunction<Integer, String> after = t -> TEST_VALUE1;
             SQLBiFunction<String, Integer, String> combined = function.andThen(after);
@@ -60,7 +60,7 @@ public class SQLBiFunctionTest {
 
         @Test
         @DisplayName("applies and throws")
-        public void testAcceptsAndThrows() {
+        void testAcceptsAndThrows() {
             SQLBiFunction<String, Integer, Integer> function = (t, u) -> TEST_RESULT;
             SQLFunction<Integer, String> after = t -> {
                 throw new SQLException("after");
@@ -73,7 +73,7 @@ public class SQLBiFunctionTest {
 
         @Test
         @DisplayName("throws and applies")
-        public void testThrowsAndAccepts() {
+        void testThrowsAndAccepts() {
             SQLBiFunction<String, Integer, Integer> function = (t, u) -> {
                 throw new SQLException("function");
             };
@@ -86,7 +86,7 @@ public class SQLBiFunctionTest {
 
         @Test
         @DisplayName("throws and throws")
-        public void testThrowsAndThrows() {
+        void testThrowsAndThrows() {
             SQLBiFunction<String, Integer, Integer> function = (t, u) -> {
                 throw new SQLException("function");
             };
@@ -102,17 +102,17 @@ public class SQLBiFunctionTest {
 
     @Nested
     @DisplayName("unchecked(SQLBiFunction<? super T, ? super U, ? extends R>)")
-    public class Unchecked {
+    class Unchecked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> unchecked(null));
         }
 
         @Test
         @DisplayName("applies")
-        public void testApplies() {
+        void testApplies() {
             SQLBiFunction<String, Integer, Integer> sqlFunction = (t, u) -> TEST_RESULT;
             BiFunction<String, Integer, Integer> function = unchecked(sqlFunction);
 
@@ -121,7 +121,7 @@ public class SQLBiFunctionTest {
 
         @Test
         @DisplayName("throws")
-        public void testThrows() {
+        void testThrows() {
             SQLBiFunction<String, Integer, Integer> sqlFunction = (t, u) -> {
                 throw new SQLException("sqlFunction");
             };
@@ -136,17 +136,17 @@ public class SQLBiFunctionTest {
 
     @Nested
     @DisplayName("checked(BiFunction<? super T, ? super U, ? extends R>)")
-    public class Checked {
+    class Checked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> checked(null));
         }
 
         @Test
         @DisplayName("applies")
-        public void testApplies() throws SQLException {
+        void testApplies() throws SQLException {
             BiFunction<String, Integer, Integer> function = (t, u) -> TEST_RESULT;
             SQLBiFunction<String, Integer, Integer> sqlFunction = checked(function);
 
@@ -155,7 +155,7 @@ public class SQLBiFunctionTest {
 
         @Test
         @DisplayName("throws UncheckedSQLException")
-        public void testThrowsUncheckedSQLException() {
+        void testThrowsUncheckedSQLException() {
             SQLException e = new SQLException("original");
             BiFunction<String, Integer, Integer> function = (t, u) -> {
                 throw new UncheckedSQLException(e);
@@ -168,7 +168,7 @@ public class SQLBiFunctionTest {
 
         @Test
         @DisplayName("throws other exception")
-        public void testThrowsOtherException() {
+        void testThrowsOtherException() {
             IllegalStateException e = new IllegalStateException("error");
             BiFunction<String, Integer, Integer> function = (t, u) -> {
                 throw e;

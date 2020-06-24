@@ -29,25 +29,25 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings({ "javadoc", "nls" })
-public class IntToDoubleSQLFunctionTest {
+@SuppressWarnings("nls")
+class IntToDoubleSQLFunctionTest {
 
     private static final int TEST_VALUE = 13;
     private static final double TEST_RESULT = Math.PI;
 
     @Nested
     @DisplayName("unchecked(IntToDoubleSQLFunction)")
-    public class Unchecked {
+    class Unchecked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> unchecked(null));
         }
 
         @Test
         @DisplayName("applies")
-        public void testApplies() {
+        void testApplies() {
             IntToDoubleSQLFunction sqlFunction = t -> TEST_RESULT;
             IntToDoubleFunction function = unchecked(sqlFunction);
 
@@ -56,7 +56,7 @@ public class IntToDoubleSQLFunctionTest {
 
         @Test
         @DisplayName("throws")
-        public void testThrows() {
+        void testThrows() {
             IntToDoubleSQLFunction sqlFunction = t -> {
                 throw new SQLException("sqlFunction");
             };
@@ -71,17 +71,17 @@ public class IntToDoubleSQLFunctionTest {
 
     @Nested
     @DisplayName("checked(IntToDoubleFunction<? super R, ? extends R>)")
-    public class Checked {
+    class Checked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> checked(null));
         }
 
         @Test
         @DisplayName("applies")
-        public void testApplies() throws SQLException {
+        void testApplies() throws SQLException {
             IntToDoubleFunction function = t -> TEST_RESULT;
             IntToDoubleSQLFunction sqlFunction = checked(function);
 
@@ -90,7 +90,7 @@ public class IntToDoubleSQLFunctionTest {
 
         @Test
         @DisplayName("throws UncheckedSQLException")
-        public void testThrowsUncheckedSQLException() {
+        void testThrowsUncheckedSQLException() {
             SQLException e = new SQLException("original");
             IntToDoubleFunction function = t -> {
                 throw new UncheckedSQLException(e);
@@ -103,7 +103,7 @@ public class IntToDoubleSQLFunctionTest {
 
         @Test
         @DisplayName("throws other exception")
-        public void testThrowsOtherException() {
+        void testThrowsOtherException() {
             IllegalStateException e = new IllegalStateException("error");
             IntToDoubleFunction function = t -> {
                 throw e;

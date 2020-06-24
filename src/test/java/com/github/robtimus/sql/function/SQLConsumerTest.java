@@ -32,18 +32,18 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings({ "javadoc", "nls" })
-public class SQLConsumerTest {
+@SuppressWarnings("nls")
+class SQLConsumerTest {
 
     private static final String TEST_VALUE = "foo";
 
     @Nested
     @DisplayName("andThen(SQLConsumer<? super T>)")
-    public class AndThen {
+    class AndThen {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             SQLConsumer<String> consumer = t -> { /* does nothing */ };
 
             assertThrows(NullPointerException.class, () -> consumer.andThen(null));
@@ -51,7 +51,7 @@ public class SQLConsumerTest {
 
         @Test
         @DisplayName("accepts and accepts")
-        public void testAcceptsAndAccepts() throws SQLException {
+        void testAcceptsAndAccepts() throws SQLException {
             List<String> consumerList = new ArrayList<>();
             List<String> afterList = new ArrayList<>();
 
@@ -66,7 +66,7 @@ public class SQLConsumerTest {
 
         @Test
         @DisplayName("accepts and throws")
-        public void testAcceptsAndThrows() {
+        void testAcceptsAndThrows() {
             List<String> consumerList = new ArrayList<>();
 
             SQLConsumer<String> consumer = consumerList::add;
@@ -82,7 +82,7 @@ public class SQLConsumerTest {
 
         @Test
         @DisplayName("throws and accepts")
-        public void testThrowsAndAccepts() {
+        void testThrowsAndAccepts() {
             List<String> afterList = new ArrayList<>();
 
             SQLConsumer<String> consumer = t -> {
@@ -98,7 +98,7 @@ public class SQLConsumerTest {
 
         @Test
         @DisplayName("throws and throws")
-        public void testThrowsAndThrows() {
+        void testThrowsAndThrows() {
             SQLConsumer<String> consumer = t -> {
                 throw new SQLException("consumer");
             };
@@ -114,17 +114,17 @@ public class SQLConsumerTest {
 
     @Nested
     @DisplayName("unchecked(SQLConsumer<? super T>)")
-    public class Unchecked {
+    class Unchecked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> unchecked(null));
         }
 
         @Test
         @DisplayName("accepts")
-        public void testAccepts() {
+        void testAccepts() {
             List<String> list = new ArrayList<>();
 
             SQLConsumer<String> sqlConsumer = list::add;
@@ -136,7 +136,7 @@ public class SQLConsumerTest {
 
         @Test
         @DisplayName("throws")
-        public void testThrows() {
+        void testThrows() {
             SQLConsumer<String> sqlConsumer = t -> {
                 throw new SQLException("sqlConsumer");
             };
@@ -151,17 +151,17 @@ public class SQLConsumerTest {
 
     @Nested
     @DisplayName("checked(Consumer<? super T>)")
-    public class Checked {
+    class Checked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> checked(null));
         }
 
         @Test
         @DisplayName("accepts")
-        public void testAccepts() throws SQLException {
+        void testAccepts() throws SQLException {
             List<String> list = new ArrayList<>();
 
             Consumer<String> consumer = list::add;
@@ -173,7 +173,7 @@ public class SQLConsumerTest {
 
         @Test
         @DisplayName("throws UncheckedSQLException")
-        public void testThrowsUncheckedSQLException() {
+        void testThrowsUncheckedSQLException() {
             SQLException e = new SQLException("original");
             Consumer<String> consumer = t -> {
                 throw new UncheckedSQLException(e);
@@ -186,7 +186,7 @@ public class SQLConsumerTest {
 
         @Test
         @DisplayName("throws other exception")
-        public void testThrowsOtherException() {
+        void testThrowsOtherException() {
             IllegalStateException e = new IllegalStateException("error");
             Consumer<String> consumer = t -> {
                 throw e;

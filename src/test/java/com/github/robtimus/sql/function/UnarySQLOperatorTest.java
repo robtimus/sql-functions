@@ -31,19 +31,19 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings({ "javadoc", "nls" })
-public class UnarySQLOperatorTest {
+@SuppressWarnings("nls")
+class UnarySQLOperatorTest {
 
     private static final String TEST_VALUE = "foo";
     private static final String TEST_RESULT = "bar";
 
     @Nested
     @DisplayName("identity()")
-    public class Identity {
+    class Identity {
 
         @Test
         @DisplayName("non-null value")
-        public void testNonNull() throws SQLException {
+        void testNonNull() throws SQLException {
             UnarySQLOperator<String> operator = identity();
 
             assertEquals(TEST_VALUE, operator.apply(TEST_VALUE));
@@ -51,7 +51,7 @@ public class UnarySQLOperatorTest {
 
         @Test
         @DisplayName("null value")
-        public void testNull() throws SQLException {
+        void testNull() throws SQLException {
             UnarySQLOperator<String> operator = identity();
 
             assertNull(operator.apply(null));
@@ -60,17 +60,17 @@ public class UnarySQLOperatorTest {
 
     @Nested
     @DisplayName("unchecked(UnarySQLOperator<T>)")
-    public class Unchecked {
+    class Unchecked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> unchecked(null));
         }
 
         @Test
         @DisplayName("applies")
-        public void testApplies() {
+        void testApplies() {
             UnarySQLOperator<String> sqlOperator = t -> TEST_RESULT;
             UnaryOperator<String> operator = unchecked(sqlOperator);
 
@@ -79,7 +79,7 @@ public class UnarySQLOperatorTest {
 
         @Test
         @DisplayName("throws")
-        public void testThrows() {
+        void testThrows() {
             UnarySQLOperator<String> sqlOperator = t -> {
                 throw new SQLException("sqlOperator");
             };
@@ -94,17 +94,17 @@ public class UnarySQLOperatorTest {
 
     @Nested
     @DisplayName("checked(UnaryOperator<? super T, ? extends R>)")
-    public class Checked {
+    class Checked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> checked(null));
         }
 
         @Test
         @DisplayName("applies")
-        public void testApplies() throws SQLException {
+        void testApplies() throws SQLException {
             UnaryOperator<String> operator = t -> TEST_RESULT;
             UnarySQLOperator<String> sqlOperator = checked(operator);
 
@@ -113,7 +113,7 @@ public class UnarySQLOperatorTest {
 
         @Test
         @DisplayName("throws UncheckedSQLException")
-        public void testThrowsUncheckedSQLException() {
+        void testThrowsUncheckedSQLException() {
             SQLException e = new SQLException("original");
             UnaryOperator<String> operator = t -> {
                 throw new UncheckedSQLException(e);
@@ -126,7 +126,7 @@ public class UnarySQLOperatorTest {
 
         @Test
         @DisplayName("throws other exception")
-        public void testThrowsOtherException() {
+        void testThrowsOtherException() {
             IllegalStateException e = new IllegalStateException("error");
             UnaryOperator<String> operator = t -> {
                 throw e;

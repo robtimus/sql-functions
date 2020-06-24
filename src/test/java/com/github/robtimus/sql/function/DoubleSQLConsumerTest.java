@@ -32,18 +32,18 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings({ "javadoc", "nls" })
-public class DoubleSQLConsumerTest {
+@SuppressWarnings("nls")
+class DoubleSQLConsumerTest {
 
     private static final double TEST_VALUE = Math.PI;
 
     @Nested
     @DisplayName("andThen(DoubleSQLConsumer)")
-    public class AndThen {
+    class AndThen {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             DoubleSQLConsumer consumer = t -> { /* does nothing */ };
 
             assertThrows(NullPointerException.class, () -> consumer.andThen(null));
@@ -51,7 +51,7 @@ public class DoubleSQLConsumerTest {
 
         @Test
         @DisplayName("accepts and accepts")
-        public void testAcceptsAndAccepts() throws SQLException {
+        void testAcceptsAndAccepts() throws SQLException {
             List<Double> consumerList = new ArrayList<>();
             List<Double> afterList = new ArrayList<>();
 
@@ -66,7 +66,7 @@ public class DoubleSQLConsumerTest {
 
         @Test
         @DisplayName("accepts and throws")
-        public void testAcceptsAndThrows() {
+        void testAcceptsAndThrows() {
             List<Double> consumerList = new ArrayList<>();
 
             DoubleSQLConsumer consumer = consumerList::add;
@@ -82,7 +82,7 @@ public class DoubleSQLConsumerTest {
 
         @Test
         @DisplayName("throws and accepts")
-        public void testThrowsAndAccepts() {
+        void testThrowsAndAccepts() {
             List<Double> afterList = new ArrayList<>();
 
             DoubleSQLConsumer consumer = t -> {
@@ -98,7 +98,7 @@ public class DoubleSQLConsumerTest {
 
         @Test
         @DisplayName("throws and throws")
-        public void testThrowsAndThrows() {
+        void testThrowsAndThrows() {
             DoubleSQLConsumer consumer = t -> {
                 throw new SQLException("consumer");
             };
@@ -114,17 +114,17 @@ public class DoubleSQLConsumerTest {
 
     @Nested
     @DisplayName("unchecked(DoubleSQLConsumer)")
-    public class Unchecked {
+    class Unchecked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> unchecked(null));
         }
 
         @Test
         @DisplayName("accepts")
-        public void testAccepts() {
+        void testAccepts() {
             List<Double> list = new ArrayList<>();
 
             DoubleSQLConsumer sqlConsumer = list::add;
@@ -136,7 +136,7 @@ public class DoubleSQLConsumerTest {
 
         @Test
         @DisplayName("throws")
-        public void testThrows() {
+        void testThrows() {
             DoubleSQLConsumer sqlConsumer = t -> {
                 throw new SQLException("sqlConsumer");
             };
@@ -151,17 +151,17 @@ public class DoubleSQLConsumerTest {
 
     @Nested
     @DisplayName("checked(DoubleConsumer)")
-    public class Checked {
+    class Checked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> checked(null));
         }
 
         @Test
         @DisplayName("accepts")
-        public void testAccepts() throws SQLException {
+        void testAccepts() throws SQLException {
             List<Double> list = new ArrayList<>();
 
             DoubleConsumer consumer = list::add;
@@ -173,7 +173,7 @@ public class DoubleSQLConsumerTest {
 
         @Test
         @DisplayName("throws UncheckedSQLException")
-        public void testThrowsUncheckedSQLException() {
+        void testThrowsUncheckedSQLException() {
             SQLException e = new SQLException("original");
             DoubleConsumer consumer = t -> {
                 throw new UncheckedSQLException(e);
@@ -186,7 +186,7 @@ public class DoubleSQLConsumerTest {
 
         @Test
         @DisplayName("throws other exception")
-        public void testThrowsOtherException() {
+        void testThrowsOtherException() {
             IllegalStateException e = new IllegalStateException("error");
             DoubleConsumer consumer = t -> {
                 throw e;

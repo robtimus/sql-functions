@@ -31,18 +31,18 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings({ "javadoc", "nls" })
-public class IntSQLPredicateTest {
+@SuppressWarnings("nls")
+class IntSQLPredicateTest {
 
     private static final int TEST_VALUE = 13;
 
     @Nested
     @DisplayName("and(IntSQLPredicate)")
-    public class And {
+    class And {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             IntSQLPredicate predicate = t -> true;
 
             assertThrows(NullPointerException.class, () -> predicate.and(null));
@@ -50,7 +50,7 @@ public class IntSQLPredicateTest {
 
         @Test
         @DisplayName("true and true")
-        public void testTrueAndTrue() throws SQLException {
+        void testTrueAndTrue() throws SQLException {
             IntSQLPredicate predicate = t -> true;
             IntSQLPredicate other = t -> true;
             IntSQLPredicate combined = predicate.and(other);
@@ -60,7 +60,7 @@ public class IntSQLPredicateTest {
 
         @Test
         @DisplayName("true and false")
-        public void testTrueAndFalse() throws SQLException {
+        void testTrueAndFalse() throws SQLException {
             IntSQLPredicate predicate = t -> true;
             IntSQLPredicate other = t -> false;
             IntSQLPredicate combined = predicate.and(other);
@@ -70,7 +70,7 @@ public class IntSQLPredicateTest {
 
         @Test
         @DisplayName("true and throws")
-        public void testTrueAndThrows() {
+        void testTrueAndThrows() {
             IntSQLPredicate predicate = t -> true;
             IntSQLPredicate other = t -> {
                 throw new SQLException("other");
@@ -83,7 +83,7 @@ public class IntSQLPredicateTest {
 
         @Test
         @DisplayName("false and true")
-        public void testFalseAndTrue() throws SQLException {
+        void testFalseAndTrue() throws SQLException {
             IntSQLPredicate predicate = t -> false;
             IntSQLPredicate other = t -> true;
             IntSQLPredicate combined = predicate.and(other);
@@ -93,7 +93,7 @@ public class IntSQLPredicateTest {
 
         @Test
         @DisplayName("false and false")
-        public void testFalseAndFalse() throws SQLException {
+        void testFalseAndFalse() throws SQLException {
             IntSQLPredicate predicate = t -> false;
             IntSQLPredicate other = t -> false;
             IntSQLPredicate combined = predicate.and(other);
@@ -103,7 +103,7 @@ public class IntSQLPredicateTest {
 
         @Test
         @DisplayName("false and throws")
-        public void testFalseAndThrows() throws SQLException {
+        void testFalseAndThrows() throws SQLException {
             IntSQLPredicate predicate = t -> false;
             IntSQLPredicate other = t -> {
                 throw new SQLException("other");
@@ -115,7 +115,7 @@ public class IntSQLPredicateTest {
 
         @Test
         @DisplayName("throws and true")
-        public void testThrowsAndTrue() {
+        void testThrowsAndTrue() {
             IntSQLPredicate predicate = t -> {
                 throw new SQLException("predicate");
             };
@@ -128,7 +128,7 @@ public class IntSQLPredicateTest {
 
         @Test
         @DisplayName("throws and false")
-        public void testThrowsAndFalse() {
+        void testThrowsAndFalse() {
             IntSQLPredicate predicate = t -> {
                 throw new SQLException("predicate");
             };
@@ -141,7 +141,7 @@ public class IntSQLPredicateTest {
 
         @Test
         @DisplayName("throws and throws")
-        public void testThrowsAndThrows() {
+        void testThrowsAndThrows() {
             IntSQLPredicate predicate = t -> {
                 throw new SQLException("predicate");
             };
@@ -157,11 +157,11 @@ public class IntSQLPredicateTest {
 
     @Nested
     @DisplayName("negate()")
-    public class Negate {
+    class Negate {
 
         @Test
         @DisplayName("true")
-        public void testTrue() throws SQLException {
+        void testTrue() throws SQLException {
             IntSQLPredicate predicate = t -> true;
             IntSQLPredicate negated = predicate.negate();
 
@@ -170,7 +170,7 @@ public class IntSQLPredicateTest {
 
         @Test
         @DisplayName("false")
-        public void testFalse() throws SQLException {
+        void testFalse() throws SQLException {
             IntSQLPredicate predicate = t -> false;
             IntSQLPredicate negated = predicate.negate();
 
@@ -179,7 +179,7 @@ public class IntSQLPredicateTest {
 
         @Test
         @DisplayName("throws")
-        public void testThrows() {
+        void testThrows() {
             IntSQLPredicate predicate = t -> {
                 throw new SQLException("predicate");
             };
@@ -192,11 +192,11 @@ public class IntSQLPredicateTest {
 
     @Nested
     @DisplayName("or(IntSQLPredicate)")
-    public class Or {
+    class Or {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             IntSQLPredicate predicate = t -> true;
 
             assertThrows(NullPointerException.class, () -> predicate.or(null));
@@ -204,7 +204,7 @@ public class IntSQLPredicateTest {
 
         @Test
         @DisplayName("true or true")
-        public void testTrueOrTrue() throws SQLException {
+        void testTrueOrTrue() throws SQLException {
             IntSQLPredicate predicate = t -> true;
             IntSQLPredicate other = t -> true;
             IntSQLPredicate combined = predicate.or(other);
@@ -214,7 +214,7 @@ public class IntSQLPredicateTest {
 
         @Test
         @DisplayName("true or false")
-        public void testTrueOrFalse() throws SQLException {
+        void testTrueOrFalse() throws SQLException {
             IntSQLPredicate predicate = t -> true;
             IntSQLPredicate other = t -> false;
             IntSQLPredicate combined = predicate.or(other);
@@ -224,7 +224,7 @@ public class IntSQLPredicateTest {
 
         @Test
         @DisplayName("true or throws")
-        public void testTrueOrThrows() throws SQLException {
+        void testTrueOrThrows() throws SQLException {
             IntSQLPredicate predicate = t -> true;
             IntSQLPredicate other = t -> {
                 throw new SQLException("other");
@@ -236,7 +236,7 @@ public class IntSQLPredicateTest {
 
         @Test
         @DisplayName("false or true")
-        public void testFalseOrTrue() throws SQLException {
+        void testFalseOrTrue() throws SQLException {
             IntSQLPredicate predicate = t -> false;
             IntSQLPredicate other = t -> true;
             IntSQLPredicate combined = predicate.or(other);
@@ -246,7 +246,7 @@ public class IntSQLPredicateTest {
 
         @Test
         @DisplayName("false or false")
-        public void testFalseOrFalse() throws SQLException {
+        void testFalseOrFalse() throws SQLException {
             IntSQLPredicate predicate = t -> false;
             IntSQLPredicate other = t -> false;
             IntSQLPredicate combined = predicate.or(other);
@@ -256,7 +256,7 @@ public class IntSQLPredicateTest {
 
         @Test
         @DisplayName("false or throws")
-        public void testFalseOrThrows() {
+        void testFalseOrThrows() {
             IntSQLPredicate predicate = t -> false;
             IntSQLPredicate other = t -> {
                 throw new SQLException("other");
@@ -269,7 +269,7 @@ public class IntSQLPredicateTest {
 
         @Test
         @DisplayName("throws or true")
-        public void testThrowsOrTrue() {
+        void testThrowsOrTrue() {
             IntSQLPredicate predicate = t -> {
                 throw new SQLException("predicate");
             };
@@ -282,7 +282,7 @@ public class IntSQLPredicateTest {
 
         @Test
         @DisplayName("throws or false")
-        public void testThrowsOrFalse() {
+        void testThrowsOrFalse() {
             IntSQLPredicate predicate = t -> {
                 throw new SQLException("predicate");
             };
@@ -295,7 +295,7 @@ public class IntSQLPredicateTest {
 
         @Test
         @DisplayName("throws or throws")
-        public void testThrowsOrThrows() {
+        void testThrowsOrThrows() {
             IntSQLPredicate predicate = t -> {
                 throw new SQLException("predicate");
             };
@@ -311,17 +311,17 @@ public class IntSQLPredicateTest {
 
     @Nested
     @DisplayName("unchecked(IntSQLPredicate)")
-    public class Unchecked {
+    class Unchecked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> unchecked(null));
         }
 
         @Test
         @DisplayName("true")
-        public void testTrue() {
+        void testTrue() {
             IntSQLPredicate sqlPredicate = t -> true;
             IntPredicate predicate = unchecked(sqlPredicate);
 
@@ -330,7 +330,7 @@ public class IntSQLPredicateTest {
 
         @Test
         @DisplayName("false")
-        public void testFalse() {
+        void testFalse() {
             IntSQLPredicate sqlPredicate = t -> false;
             IntPredicate predicate = unchecked(sqlPredicate);
 
@@ -339,7 +339,7 @@ public class IntSQLPredicateTest {
 
         @Test
         @DisplayName("throws")
-        public void testThrows() {
+        void testThrows() {
             IntSQLPredicate sqlPredicate = t -> {
                 throw new SQLException("sqlPredicate");
             };
@@ -354,17 +354,17 @@ public class IntSQLPredicateTest {
 
     @Nested
     @DisplayName("checked(IntPredicate)")
-    public class Checked {
+    class Checked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> checked(null));
         }
 
         @Test
         @DisplayName("true")
-        public void testTrue() throws SQLException {
+        void testTrue() throws SQLException {
             IntPredicate predicate = t -> true;
             IntSQLPredicate sqlPredicate = checked(predicate);
 
@@ -373,7 +373,7 @@ public class IntSQLPredicateTest {
 
         @Test
         @DisplayName("false")
-        public void testFalse() throws SQLException {
+        void testFalse() throws SQLException {
             IntPredicate predicate = t -> false;
             IntSQLPredicate sqlPredicate = checked(predicate);
 
@@ -382,7 +382,7 @@ public class IntSQLPredicateTest {
 
         @Test
         @DisplayName("throws UncheckedSQLException")
-        public void testThrowsUncheckedSQLException() {
+        void testThrowsUncheckedSQLException() {
             SQLException e = new SQLException("original");
             IntPredicate predicate = t -> {
                 throw new UncheckedSQLException(e);
@@ -395,7 +395,7 @@ public class IntSQLPredicateTest {
 
         @Test
         @DisplayName("throws other exception")
-        public void testThrowsOtherException() {
+        void testThrowsOtherException() {
             IllegalStateException e = new IllegalStateException("error");
             IntPredicate predicate = t -> {
                 throw e;

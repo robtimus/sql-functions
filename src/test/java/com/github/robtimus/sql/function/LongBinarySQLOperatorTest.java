@@ -29,8 +29,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings({ "javadoc", "nls" })
-public class LongBinarySQLOperatorTest {
+@SuppressWarnings("nls")
+class LongBinarySQLOperatorTest {
 
     private static final long TEST_VALUE1 = System.currentTimeMillis();
     private static final long TEST_VALUE2 = TEST_VALUE1 * 2;
@@ -38,17 +38,17 @@ public class LongBinarySQLOperatorTest {
 
     @Nested
     @DisplayName("unchecked(LongBinarySQLOperator)")
-    public class Unchecked {
+    class Unchecked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> unchecked(null));
         }
 
         @Test
         @DisplayName("applies")
-        public void testApplies() {
+        void testApplies() {
             LongBinarySQLOperator sqlOperator = (t, u) -> TEST_RESULT;
             LongBinaryOperator operator = unchecked(sqlOperator);
 
@@ -57,7 +57,7 @@ public class LongBinarySQLOperatorTest {
 
         @Test
         @DisplayName("throws")
-        public void testThrows() {
+        void testThrows() {
             LongBinarySQLOperator sqlOperator = (t, u) -> {
                 throw new SQLException("sqlOperator");
             };
@@ -72,17 +72,17 @@ public class LongBinarySQLOperatorTest {
 
     @Nested
     @DisplayName("checked(LongBinaryOperator<T>)")
-    public class Checked {
+    class Checked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> checked(null));
         }
 
         @Test
         @DisplayName("applies")
-        public void testApplies() throws SQLException {
+        void testApplies() throws SQLException {
             LongBinaryOperator operator = (t, u) -> TEST_RESULT;
             LongBinarySQLOperator sqlOperator = checked(operator);
 
@@ -91,7 +91,7 @@ public class LongBinarySQLOperatorTest {
 
         @Test
         @DisplayName("throws UncheckedSQLException")
-        public void testThrowsUncheckedSQLException() {
+        void testThrowsUncheckedSQLException() {
             SQLException e = new SQLException("original");
             LongBinaryOperator operator = (t, u) -> {
                 throw new UncheckedSQLException(e);
@@ -104,7 +104,7 @@ public class LongBinarySQLOperatorTest {
 
         @Test
         @DisplayName("throws other exception")
-        public void testThrowsOtherException() {
+        void testThrowsOtherException() {
             IllegalStateException e = new IllegalStateException("error");
             LongBinaryOperator operator = (t, u) -> {
                 throw e;

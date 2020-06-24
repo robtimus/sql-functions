@@ -29,8 +29,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings({ "javadoc", "nls" })
-public class IntBinarySQLOperatorTest {
+@SuppressWarnings("nls")
+class IntBinarySQLOperatorTest {
 
     private static final int TEST_VALUE1 = 13;
     private static final int TEST_VALUE2 = 481;
@@ -38,17 +38,17 @@ public class IntBinarySQLOperatorTest {
 
     @Nested
     @DisplayName("unchecked(IntBinarySQLOperator)")
-    public class Unchecked {
+    class Unchecked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> unchecked(null));
         }
 
         @Test
         @DisplayName("applies")
-        public void testApplies() {
+        void testApplies() {
             IntBinarySQLOperator sqlOperator = (t, u) -> TEST_RESULT;
             IntBinaryOperator operator = unchecked(sqlOperator);
 
@@ -57,7 +57,7 @@ public class IntBinarySQLOperatorTest {
 
         @Test
         @DisplayName("throws")
-        public void testThrows() {
+        void testThrows() {
             IntBinarySQLOperator sqlOperator = (t, u) -> {
                 throw new SQLException("sqlOperator");
             };
@@ -72,17 +72,17 @@ public class IntBinarySQLOperatorTest {
 
     @Nested
     @DisplayName("checked(IntBinaryOperator<T>)")
-    public class Checked {
+    class Checked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> checked(null));
         }
 
         @Test
         @DisplayName("applies")
-        public void testApplies() throws SQLException {
+        void testApplies() throws SQLException {
             IntBinaryOperator operator = (t, u) -> TEST_RESULT;
             IntBinarySQLOperator sqlOperator = checked(operator);
 
@@ -91,7 +91,7 @@ public class IntBinarySQLOperatorTest {
 
         @Test
         @DisplayName("throws UncheckedSQLException")
-        public void testThrowsUncheckedSQLException() {
+        void testThrowsUncheckedSQLException() {
             SQLException e = new SQLException("original");
             IntBinaryOperator operator = (t, u) -> {
                 throw new UncheckedSQLException(e);
@@ -104,7 +104,7 @@ public class IntBinarySQLOperatorTest {
 
         @Test
         @DisplayName("throws other exception")
-        public void testThrowsOtherException() {
+        void testThrowsOtherException() {
             IllegalStateException e = new IllegalStateException("error");
             IntBinaryOperator operator = (t, u) -> {
                 throw e;

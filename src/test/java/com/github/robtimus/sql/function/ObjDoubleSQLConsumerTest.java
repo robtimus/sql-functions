@@ -32,25 +32,25 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings({ "javadoc", "nls" })
-public class ObjDoubleSQLConsumerTest {
+@SuppressWarnings("nls")
+class ObjDoubleSQLConsumerTest {
 
     private static final String TEST_VALUE1 = "foo";
     private static final double TEST_VALUE2 = Math.PI;
 
     @Nested
     @DisplayName("unchecked(ObjDoubleSQLConsumer<? super T>)")
-    public class Unchecked {
+    class Unchecked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> unchecked(null));
         }
 
         @Test
         @DisplayName("accepts")
-        public void testAccepts() {
+        void testAccepts() {
             Map<String, Double> map = new HashMap<>();
 
             ObjDoubleSQLConsumer<String> sqlConsumer = map::put;
@@ -62,7 +62,7 @@ public class ObjDoubleSQLConsumerTest {
 
         @Test
         @DisplayName("throws")
-        public void testThrows() {
+        void testThrows() {
             ObjDoubleSQLConsumer<String> sqlConsumer = (t, u) -> {
                 throw new SQLException("sqlConsumer");
             };
@@ -77,17 +77,17 @@ public class ObjDoubleSQLConsumerTest {
 
     @Nested
     @DisplayName("checked(ObjDoubleConsumer<? super T>)")
-    public class Checked {
+    class Checked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> checked(null));
         }
 
         @Test
         @DisplayName("accepts")
-        public void testAccepts() throws SQLException {
+        void testAccepts() throws SQLException {
             Map<String, Double> map = new HashMap<>();
 
             ObjDoubleConsumer<String> consumer = map::put;
@@ -99,7 +99,7 @@ public class ObjDoubleSQLConsumerTest {
 
         @Test
         @DisplayName("throws UncheckedSQLException")
-        public void testThrowsUncheckedSQLException() {
+        void testThrowsUncheckedSQLException() {
             SQLException e = new SQLException("original");
             ObjDoubleConsumer<String> consumer = (t, u) -> {
                 throw new UncheckedSQLException(e);
@@ -112,7 +112,7 @@ public class ObjDoubleSQLConsumerTest {
 
         @Test
         @DisplayName("throws other exception")
-        public void testThrowsOtherException() {
+        void testThrowsOtherException() {
             IllegalStateException e = new IllegalStateException("error");
             ObjDoubleConsumer<String> consumer = (t, u) -> {
                 throw e;

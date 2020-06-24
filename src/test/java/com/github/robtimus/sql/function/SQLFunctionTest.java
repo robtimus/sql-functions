@@ -31,19 +31,19 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings({ "javadoc", "nls" })
-public class SQLFunctionTest {
+@SuppressWarnings("nls")
+class SQLFunctionTest {
 
     private static final String TEST_VALUE = "foo";
     private static final Integer TEST_RESULT = TEST_VALUE.length();
 
     @Nested
     @DisplayName("compose(SQLFunction<? super T, ? extends R>)")
-    public class Compose {
+    class Compose {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             SQLFunction<String, Integer> function = String::length;
 
             assertThrows(NullPointerException.class, () -> function.compose(null));
@@ -51,7 +51,7 @@ public class SQLFunctionTest {
 
         @Test
         @DisplayName("applies and applies")
-        public void testAppliesAndApplies() throws SQLException {
+        void testAppliesAndApplies() throws SQLException {
             SQLFunction<String, Integer> function = t -> TEST_RESULT;
             SQLFunction<Integer, String> before = t -> TEST_VALUE;
             SQLFunction<Integer, Integer> combined = function.compose(before);
@@ -61,7 +61,7 @@ public class SQLFunctionTest {
 
         @Test
         @DisplayName("applies and throws")
-        public void testAcceptsAndThrows() {
+        void testAcceptsAndThrows() {
             SQLFunction<String, Integer> function = t -> TEST_RESULT;
             SQLFunction<Integer, String> before = t -> {
                 throw new SQLException("before");
@@ -74,7 +74,7 @@ public class SQLFunctionTest {
 
         @Test
         @DisplayName("throws and applies")
-        public void testThrowsAndAccepts() {
+        void testThrowsAndAccepts() {
             SQLFunction<String, Integer> function = t -> {
                 throw new SQLException("function");
             };
@@ -87,7 +87,7 @@ public class SQLFunctionTest {
 
         @Test
         @DisplayName("throws and throws")
-        public void testThrowsAndThrows() {
+        void testThrowsAndThrows() {
             SQLFunction<String, Integer> function = t -> {
                 throw new SQLException("function");
             };
@@ -103,11 +103,11 @@ public class SQLFunctionTest {
 
     @Nested
     @DisplayName("andThen(SQLFunction<? super T, ? extends R>)")
-    public class AndThen {
+    class AndThen {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             SQLFunction<String, Integer> function = String::length;
 
             assertThrows(NullPointerException.class, () -> function.andThen(null));
@@ -115,7 +115,7 @@ public class SQLFunctionTest {
 
         @Test
         @DisplayName("applies and applies")
-        public void testAppliesAndApplies() throws SQLException {
+        void testAppliesAndApplies() throws SQLException {
             SQLFunction<String, Integer> function = t -> TEST_RESULT;
             SQLFunction<Integer, String> after = t -> TEST_VALUE;
             SQLFunction<String, String> combined = function.andThen(after);
@@ -125,7 +125,7 @@ public class SQLFunctionTest {
 
         @Test
         @DisplayName("applies and throws")
-        public void testAcceptsAndThrows() {
+        void testAcceptsAndThrows() {
             SQLFunction<String, Integer> function = t -> TEST_RESULT;
             SQLFunction<Integer, String> after = t -> {
                 throw new SQLException("after");
@@ -138,7 +138,7 @@ public class SQLFunctionTest {
 
         @Test
         @DisplayName("throws and applies")
-        public void testThrowsAndAccepts() {
+        void testThrowsAndAccepts() {
             SQLFunction<String, Integer> function = t -> {
                 throw new SQLException("function");
             };
@@ -151,7 +151,7 @@ public class SQLFunctionTest {
 
         @Test
         @DisplayName("throws and throws")
-        public void testThrowsAndThrows() {
+        void testThrowsAndThrows() {
             SQLFunction<String, Integer> function = t -> {
                 throw new SQLException("function");
             };
@@ -167,11 +167,11 @@ public class SQLFunctionTest {
 
     @Nested
     @DisplayName("identity()")
-    public class Identity {
+    class Identity {
 
         @Test
         @DisplayName("non-null value")
-        public void testNonNull() throws SQLException {
+        void testNonNull() throws SQLException {
             SQLFunction<String, String> function = identity();
 
             assertEquals(TEST_VALUE, function.apply(TEST_VALUE));
@@ -179,7 +179,7 @@ public class SQLFunctionTest {
 
         @Test
         @DisplayName("null value")
-        public void testNull() throws SQLException {
+        void testNull() throws SQLException {
             SQLFunction<String, String> function = identity();
 
             assertNull(function.apply(null));
@@ -188,17 +188,17 @@ public class SQLFunctionTest {
 
     @Nested
     @DisplayName("unchecked(SQLFunction<? super T, ? extends R>)")
-    public class Unchecked {
+    class Unchecked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> unchecked(null));
         }
 
         @Test
         @DisplayName("applies")
-        public void testApplies() {
+        void testApplies() {
             SQLFunction<String, Integer> sqlFunction = String::length;
             Function<String, Integer> function = unchecked(sqlFunction);
 
@@ -207,7 +207,7 @@ public class SQLFunctionTest {
 
         @Test
         @DisplayName("throws")
-        public void testThrows() {
+        void testThrows() {
             SQLFunction<String, Integer> sqlFunction = t -> {
                 throw new SQLException("sqlFunction");
             };
@@ -222,17 +222,17 @@ public class SQLFunctionTest {
 
     @Nested
     @DisplayName("checked(Function<? super T, ? extends R>)")
-    public class Checked {
+    class Checked {
 
         @Test
         @DisplayName("null argument")
-        public void testNullArgument() {
+        void testNullArgument() {
             assertThrows(NullPointerException.class, () -> checked(null));
         }
 
         @Test
         @DisplayName("applies")
-        public void testApplies() throws SQLException {
+        void testApplies() throws SQLException {
             Function<String, Integer> function = String::length;
             SQLFunction<String, Integer> sqlFunction = checked(function);
 
@@ -241,7 +241,7 @@ public class SQLFunctionTest {
 
         @Test
         @DisplayName("throws UncheckedSQLException")
-        public void testThrowsUncheckedSQLException() {
+        void testThrowsUncheckedSQLException() {
             SQLException e = new SQLException("original");
             Function<String, Integer> function = t -> {
                 throw new UncheckedSQLException(e);
@@ -254,7 +254,7 @@ public class SQLFunctionTest {
 
         @Test
         @DisplayName("throws other exception")
-        public void testThrowsOtherException() {
+        void testThrowsOtherException() {
             IllegalStateException e = new IllegalStateException("error");
             Function<String, Integer> function = t -> {
                 throw e;
