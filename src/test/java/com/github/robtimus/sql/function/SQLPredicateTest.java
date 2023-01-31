@@ -63,11 +63,7 @@ class SQLPredicateTest {
         @Test
         @DisplayName("true and false")
         void testTrueAndFalse() throws SQLException {
-            SQLPredicate<String> predicate = t -> true;
-            SQLPredicate<String> other = t -> false;
-            SQLPredicate<String> combined = predicate.and(other);
-
-            assertFalse(combined.test(TEST_VALUE));
+            testFalseResult(true, false);
         }
 
         @Test
@@ -86,21 +82,13 @@ class SQLPredicateTest {
         @Test
         @DisplayName("false and true")
         void testFalseAndTrue() throws SQLException {
-            SQLPredicate<String> predicate = t -> false;
-            SQLPredicate<String> other = t -> true;
-            SQLPredicate<String> combined = predicate.and(other);
-
-            assertFalse(combined.test(TEST_VALUE));
+            testFalseResult(false, true);
         }
 
         @Test
         @DisplayName("false and false")
         void testFalseAndFalse() throws SQLException {
-            SQLPredicate<String> predicate = t -> false;
-            SQLPredicate<String> other = t -> false;
-            SQLPredicate<String> combined = predicate.and(other);
-
-            assertFalse(combined.test(TEST_VALUE));
+            testFalseResult(false, false);
         }
 
         @Test
@@ -155,6 +143,14 @@ class SQLPredicateTest {
             SQLException exception = assertThrows(SQLException.class, () -> combined.test(TEST_VALUE));
             assertEquals("predicate", exception.getMessage());
         }
+
+        private void testFalseResult(boolean firstResult, boolean secondResult) throws SQLException {
+            SQLPredicate<String> predicate = t -> firstResult;
+            SQLPredicate<String> other = t -> secondResult;
+            SQLPredicate<String> combined = predicate.and(other);
+
+            assertFalse(combined.test(TEST_VALUE));
+        }
     }
 
     @Nested
@@ -207,21 +203,13 @@ class SQLPredicateTest {
         @Test
         @DisplayName("true or true")
         void testTrueOrTrue() throws SQLException {
-            SQLPredicate<String> predicate = t -> true;
-            SQLPredicate<String> other = t -> true;
-            SQLPredicate<String> combined = predicate.or(other);
-
-            assertTrue(combined.test(TEST_VALUE));
+            testTrueResult(true, true);
         }
 
         @Test
         @DisplayName("true or false")
         void testTrueOrFalse() throws SQLException {
-            SQLPredicate<String> predicate = t -> true;
-            SQLPredicate<String> other = t -> false;
-            SQLPredicate<String> combined = predicate.or(other);
-
-            assertTrue(combined.test(TEST_VALUE));
+            testTrueResult(true, false);
         }
 
         @Test
@@ -239,11 +227,7 @@ class SQLPredicateTest {
         @Test
         @DisplayName("false or true")
         void testFalseOrTrue() throws SQLException {
-            SQLPredicate<String> predicate = t -> false;
-            SQLPredicate<String> other = t -> true;
-            SQLPredicate<String> combined = predicate.or(other);
-
-            assertTrue(combined.test(TEST_VALUE));
+            testTrueResult(false, true);
         }
 
         @Test
@@ -308,6 +292,14 @@ class SQLPredicateTest {
 
             SQLException exception = assertThrows(SQLException.class, () -> combined.test(TEST_VALUE));
             assertEquals("predicate", exception.getMessage());
+        }
+
+        private void testTrueResult(boolean firstResult, boolean secondResult) throws SQLException {
+            SQLPredicate<String> predicate = t -> firstResult;
+            SQLPredicate<String> other = t -> secondResult;
+            SQLPredicate<String> combined = predicate.or(other);
+
+            assertTrue(combined.test(TEST_VALUE));
         }
     }
 

@@ -62,11 +62,7 @@ class SQLBiPredicateTest {
         @Test
         @DisplayName("true and false")
         void testTrueAndFalse() throws SQLException {
-            SQLBiPredicate<String, Integer> predicate = (t, u) -> true;
-            SQLBiPredicate<String, Integer> other = (t, u) -> false;
-            SQLBiPredicate<String, Integer> combined = predicate.and(other);
-
-            assertFalse(combined.test(TEST_VALUE1, TEST_VALUE2));
+            testFalseResult(true, false);
         }
 
         @Test
@@ -85,21 +81,13 @@ class SQLBiPredicateTest {
         @Test
         @DisplayName("false and true")
         void testFalseAndTrue() throws SQLException {
-            SQLBiPredicate<String, Integer> predicate = (t, u) -> false;
-            SQLBiPredicate<String, Integer> other = (t, u) -> true;
-            SQLBiPredicate<String, Integer> combined = predicate.and(other);
-
-            assertFalse(combined.test(TEST_VALUE1, TEST_VALUE2));
+            testFalseResult(false, true);
         }
 
         @Test
         @DisplayName("false and false")
         void testFalseAndFalse() throws SQLException {
-            SQLBiPredicate<String, Integer> predicate = (t, u) -> false;
-            SQLBiPredicate<String, Integer> other = (t, u) -> false;
-            SQLBiPredicate<String, Integer> combined = predicate.and(other);
-
-            assertFalse(combined.test(TEST_VALUE1, TEST_VALUE2));
+            testFalseResult(false, false);
         }
 
         @Test
@@ -154,6 +142,14 @@ class SQLBiPredicateTest {
             SQLException exception = assertThrows(SQLException.class, () -> combined.test(TEST_VALUE1, TEST_VALUE2));
             assertEquals("predicate", exception.getMessage());
         }
+
+        private void testFalseResult(boolean firstResult, boolean secondResult) throws SQLException {
+            SQLBiPredicate<String, Integer> predicate = (t, u) -> firstResult;
+            SQLBiPredicate<String, Integer> other = (t, u) -> secondResult;
+            SQLBiPredicate<String, Integer> combined = predicate.and(other);
+
+            assertFalse(combined.test(TEST_VALUE1, TEST_VALUE2));
+        }
     }
 
     @Nested
@@ -206,21 +202,13 @@ class SQLBiPredicateTest {
         @Test
         @DisplayName("true or true")
         void testTrueOrTrue() throws SQLException {
-            SQLBiPredicate<String, Integer> predicate = (t, u) -> true;
-            SQLBiPredicate<String, Integer> other = (t, u) -> true;
-            SQLBiPredicate<String, Integer> combined = predicate.or(other);
-
-            assertTrue(combined.test(TEST_VALUE1, TEST_VALUE2));
+            testTrueResult(true, true);
         }
 
         @Test
         @DisplayName("true or false")
         void testTrueOrFalse() throws SQLException {
-            SQLBiPredicate<String, Integer> predicate = (t, u) -> true;
-            SQLBiPredicate<String, Integer> other = (t, u) -> false;
-            SQLBiPredicate<String, Integer> combined = predicate.or(other);
-
-            assertTrue(combined.test(TEST_VALUE1, TEST_VALUE2));
+            testTrueResult(true, false);
         }
 
         @Test
@@ -238,11 +226,7 @@ class SQLBiPredicateTest {
         @Test
         @DisplayName("false or true")
         void testFalseOrTrue() throws SQLException {
-            SQLBiPredicate<String, Integer> predicate = (t, u) -> false;
-            SQLBiPredicate<String, Integer> other = (t, u) -> true;
-            SQLBiPredicate<String, Integer> combined = predicate.or(other);
-
-            assertTrue(combined.test(TEST_VALUE1, TEST_VALUE2));
+            testTrueResult(false, true);
         }
 
         @Test
@@ -307,6 +291,14 @@ class SQLBiPredicateTest {
 
             SQLException exception = assertThrows(SQLException.class, () -> combined.test(TEST_VALUE1, TEST_VALUE2));
             assertEquals("predicate", exception.getMessage());
+        }
+
+        private void testTrueResult(boolean firstResult, boolean secondResult) throws SQLException {
+            SQLBiPredicate<String, Integer> predicate = (t, u) -> firstResult;
+            SQLBiPredicate<String, Integer> other = (t, u) -> secondResult;
+            SQLBiPredicate<String, Integer> combined = predicate.or(other);
+
+            assertTrue(combined.test(TEST_VALUE1, TEST_VALUE2));
         }
     }
 

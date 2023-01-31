@@ -61,11 +61,7 @@ class LongSQLPredicateTest {
         @Test
         @DisplayName("true and false")
         void testTrueAndFalse() throws SQLException {
-            LongSQLPredicate predicate = t -> true;
-            LongSQLPredicate other = t -> false;
-            LongSQLPredicate combined = predicate.and(other);
-
-            assertFalse(combined.test(TEST_VALUE));
+            testFalseResult(true, false);
         }
 
         @Test
@@ -84,21 +80,13 @@ class LongSQLPredicateTest {
         @Test
         @DisplayName("false and true")
         void testFalseAndTrue() throws SQLException {
-            LongSQLPredicate predicate = t -> false;
-            LongSQLPredicate other = t -> true;
-            LongSQLPredicate combined = predicate.and(other);
-
-            assertFalse(combined.test(TEST_VALUE));
+            testFalseResult(false, true);
         }
 
         @Test
         @DisplayName("false and false")
         void testFalseAndFalse() throws SQLException {
-            LongSQLPredicate predicate = t -> false;
-            LongSQLPredicate other = t -> false;
-            LongSQLPredicate combined = predicate.and(other);
-
-            assertFalse(combined.test(TEST_VALUE));
+            testFalseResult(false, false);
         }
 
         @Test
@@ -153,6 +141,14 @@ class LongSQLPredicateTest {
             SQLException exception = assertThrows(SQLException.class, () -> combined.test(TEST_VALUE));
             assertEquals("predicate", exception.getMessage());
         }
+
+        private void testFalseResult(boolean firstResult, boolean secondResult) throws SQLException {
+            LongSQLPredicate predicate = t -> firstResult;
+            LongSQLPredicate other = t -> secondResult;
+            LongSQLPredicate combined = predicate.and(other);
+
+            assertFalse(combined.test(TEST_VALUE));
+        }
     }
 
     @Nested
@@ -205,21 +201,13 @@ class LongSQLPredicateTest {
         @Test
         @DisplayName("true or true")
         void testTrueOrTrue() throws SQLException {
-            LongSQLPredicate predicate = t -> true;
-            LongSQLPredicate other = t -> true;
-            LongSQLPredicate combined = predicate.or(other);
-
-            assertTrue(combined.test(TEST_VALUE));
+            testTrueResult(true, true);
         }
 
         @Test
         @DisplayName("true or false")
         void testTrueOrFalse() throws SQLException {
-            LongSQLPredicate predicate = t -> true;
-            LongSQLPredicate other = t -> false;
-            LongSQLPredicate combined = predicate.or(other);
-
-            assertTrue(combined.test(TEST_VALUE));
+            testTrueResult(true, false);
         }
 
         @Test
@@ -237,11 +225,7 @@ class LongSQLPredicateTest {
         @Test
         @DisplayName("false or true")
         void testFalseOrTrue() throws SQLException {
-            LongSQLPredicate predicate = t -> false;
-            LongSQLPredicate other = t -> true;
-            LongSQLPredicate combined = predicate.or(other);
-
-            assertTrue(combined.test(TEST_VALUE));
+            testTrueResult(false, true);
         }
 
         @Test
@@ -306,6 +290,14 @@ class LongSQLPredicateTest {
 
             SQLException exception = assertThrows(SQLException.class, () -> combined.test(TEST_VALUE));
             assertEquals("predicate", exception.getMessage());
+        }
+
+        private void testTrueResult(boolean firstResult, boolean secondResult) throws SQLException {
+            LongSQLPredicate predicate = t -> firstResult;
+            LongSQLPredicate other = t -> secondResult;
+            LongSQLPredicate combined = predicate.or(other);
+
+            assertTrue(combined.test(TEST_VALUE));
         }
     }
 
