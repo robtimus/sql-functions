@@ -15,6 +15,9 @@
  * limitations under the License.
  */
 
+/**
+ * A collection of functional interfaces for SQL operations.
+ */
 module com.github.robtimus.sql.functions {
     requires transitive java.sql;
 
