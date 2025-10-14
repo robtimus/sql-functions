@@ -65,7 +65,7 @@ class SQLRunnableTest {
             };
             Runnable action = unchecked(sqlAction);
 
-            UncheckedSQLException exception = assertThrows(UncheckedSQLException.class, () -> action.run());
+            UncheckedSQLException exception = assertThrows(UncheckedSQLException.class, action::run);
             SQLException cause = exception.getCause();
             assertNotNull(cause);
             assertEquals("sqlAction", cause.getMessage());
@@ -103,7 +103,7 @@ class SQLRunnableTest {
             };
             SQLRunnable sqlAction = checked(action);
 
-            SQLException exception = assertThrows(SQLException.class, () -> sqlAction.run());
+            SQLException exception = assertThrows(SQLException.class, sqlAction::run);
             assertSame(e, exception);
         }
 
@@ -116,7 +116,7 @@ class SQLRunnableTest {
             };
             SQLRunnable sqlAction = checked(action);
 
-            IllegalStateException exception = assertThrows(IllegalStateException.class, () -> sqlAction.run());
+            IllegalStateException exception = assertThrows(IllegalStateException.class, sqlAction::run);
             assertSame(e, exception);
         }
     }
